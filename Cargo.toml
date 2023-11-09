@@ -1,0 +1,13 @@
+[package]
+name = "axbind"
+version = "0.2.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+toml-context = { path = "/home/gfunction/Projects/Rust/Lib/toml-context/v0.1" }
+gfunc = { path = "/home/gfunction/Projects/Rust/Lib/gfunc/v0.1", features = [ 'fnav', 'runinfo' ] }
+aho-corasick = "1.1.2"
+optwrite = { path = "/home/gfunction/Projects/Rust/Lib/optwrite/v0.1/" }
+
