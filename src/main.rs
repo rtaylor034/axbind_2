@@ -5,8 +5,8 @@ fn program() -> Result<(), Error> {
     let root_master = gfunc::for_until(&program_args.config_paths, |path| toml_context::TableRoot::from_file_path(path).ok())
         .with_context(|| format!("No valid config files could be found -- paths checked: {:#?}\n (check for invalid toml syntax)",
                                  program_args.config_paths))?;
-    let config_master = config::MasterConfig::from_table(root_master.handle())?;
-    eprintln!(" >> MASTER CONFIG :: {:#?}", config_master);
+    let master_config = config::MasterConfig::from_table(root_master.handle())?;
+    eprintln!(" >> MASTER CONFIG :: {:#?}", master_config);
     Ok(())
 }
 
