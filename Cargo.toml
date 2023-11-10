@@ -10,4 +10,6 @@ toml-context = { path = "/home/gfunction/Projects/Rust/Lib/toml-context/v0.1" }
 gfunc = { path = "/home/gfunction/Projects/Rust/Lib/gfunc/v0.1", features = [ 'fnav', 'run' ] }
 aho-corasick = "1.1.2"
 optwrite = { path = "/home/gfunction/Projects/Rust/Lib/optwrite/v0.1/" }
+thiserror = "1.0.50"
+anyhow = "1.0.75"
 

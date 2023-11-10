@@ -1,6 +1,7 @@
 
-scheme_directory = "schemes"
-tag_directory = ".axbind"
+map_directory = "maps"
+function_directory = "functions"
+tag_directory = "dot_axbind"
 
 [options.meta]
 escape_char = '|'

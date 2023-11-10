@@ -1,6 +1,6 @@
-use std::env;
-use gfunc::run::{ RunInfo, ValidateExit };
+use gfunc::run::{RunInfo, ValidateExit};
 use gfunc::simple_envpath;
+use std::env;
 use std::path::PathBuf;
 
 pub struct ProgramArgs {
