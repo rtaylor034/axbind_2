@@ -1,0 +1,10 @@
+
+files = [
+    'file3',
+    'file4',
+]
+
+#single layer
+[[layers]]
+map = 'other_map'
+options.escape_char = 'Y'

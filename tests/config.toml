@@ -1,0 +1,14 @@
+
+scheme_directory = "schemes"
+tag_directory = ".axbind"
+
+[options.meta]
+escape_char = '|'
+wildcard_char = '^'
+
+[options.group]
+axbind_file_format = '^.axbind'
+
+[options.layer]
+key_format = '@^@'
+escape_char = '\'
