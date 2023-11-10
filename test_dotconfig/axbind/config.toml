@@ -1,5 +1,5 @@
 
-map_directory = "maps"
+#map_directory = "maps"
 function_directory = "functions"
 tag_directory = "dot_axbind"
 

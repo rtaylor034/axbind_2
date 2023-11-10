@@ -12,4 +12,5 @@ aho-corasick = "1.1.2"
 optwrite = { path = "/home/gfunction/Projects/Rust/Lib/optwrite/v0.1/" }
 thiserror = "1.0.50"
 anyhow = "1.0.75"
+toml = "0.8.8"
 
