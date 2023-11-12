@@ -8,17 +8,19 @@ use crate:: {
     warn_continue,
     warn
 };
+//-- Honestly overcomplex for what its worth
+//probably not worth for lazy evaluation
 use anyhow::{Context, Error};
 use std::collections::HashMap;
 pub trait RegistryItem { 
     const ITEM_TYPE: &'static str;
     type Identity<'s>: RegistryItem;
     fn construct_unverified<'t>(handle: TableHandle<'t>) -> Self::Identity<'t>;
-    fn verify(&mut self) -> Result<(), Error>;
+    fn verify(&mut self) -> Result<&mut Self, Error>;
     fn is_verified(&self) -> bool;
 }
-pub struct Registry<'t, T: RegistryItem> {
-    registry: HashMap<&'t String, T>,
+pub struct Registry<T: RegistryItem> {
+    registry: HashMap<String, T>,
 }
 pub struct BindMap<'t> {
     verified: bool,
@@ -31,21 +33,25 @@ pub struct BindFunction<'t> {
     shell: &'t str,
     command: &'t str,
 }
-impl<'st, T: RegistryItem> Registry<'st, T> {
-    pub fn from_handles<'t, I: IntoIterator<Item = TableHandle<'t>>>(handles: I) -> Registry<'t, T::Identity<'t>> {
+impl<T: RegistryItem> Registry<T> {
+    pub fn from_handles<'t, I: IntoIterator<Item = TableHandle<'t>>>(handles: I) -> Registry<T::Identity<'t>> {
         let name_key = format!("axbind_{}", T::ITEM_TYPE);
-        let registry: HashMap<&String, T::Identity<'t>> = HashMap::from_iter(
+        let registry: HashMap<String, T::Identity<'t>> = HashMap::from_iter(
             handles.into_iter()
             .filter_map(|handle| 
                 warn!(extract_value!(String, handle.get(name_key.as_str()))
                     .with_context(|| format!("No '{}' key found in file '{}'. (file skipped)", name_key, handle.context))).ok()
-                    .map(|name| (name, T::construct_unverified(handle)))));
+                    .map(|name| (name.to_owned(), T::construct_unverified(handle)))));
         Registry {
             registry,
         }
     }
-    pub fn get(key: &str) -> Result<&T::Identity<'_>, Error> {
-        todo!();
+    //awkward tbh
+    pub fn verify_get(&mut self, key: &str) -> Result<Option<&T>, Error> {
+        match self.registry.get_mut(key) {
+            Some(v) => Ok(Some(v)),
+            None => Ok(None)
+        }
     }
 }
 impl<'st> RegistryItem for BindMap<'st> {
@@ -54,12 +60,18 @@ impl<'st> RegistryItem for BindMap<'st> {
     fn construct_unverified<'t>(handle: TableHandle<'t>) -> Self::Identity<'t> {
         BindMap {
             verified: false,
-            handle: handle.clone(),
-            bindings: RefMapping::with_capacity(handle.table.len())
+            handle,
+            bindings: RefMapping::new()
         }
     }
-    fn verify(&mut self) -> Result<(), Error> {
-        todo!()
+    fn verify(&mut self) -> Result<&mut Self, Error> {
+        if self.is_verified() { return Ok(self) }
+        let bind_table = extract_value!(Table, self.handle.get("bindings"))?;
+        self.bindings = RefMapping::with_capacity(bind_table.table.len());
+        for (key, bind_handle) in bind_table {
+            self.bindings.insert(key, extract_value!(String, bind_handle)?);
+        }
+        Ok(self)
     }
 
     fn is_verified(&self) -> bool { self.verified }
@@ -75,8 +87,11 @@ impl<'st> RegistryItem for BindFunction<'st> {
             command: "",
         }
     }
-    fn verify(&mut self) -> Result<(), Error> {
-        todo!()
+    fn verify(&mut self) -> Result<&mut Self, Error> {
+        if self.is_verified() { return Ok(self) }
+        self.shell = extract_value!(String, self.handle.get("shell"))?;
+        self.command = extract_value!(String, self.handle.get("command"))?;
+        Ok(self)
     }
 
     fn is_verified(&self) -> bool { self.verified }
