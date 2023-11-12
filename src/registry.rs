@@ -52,6 +52,9 @@ impl<T: RegistryItem> Registry<T> {
     }
     //awkward tbh
     pub fn verify_get(&mut self, key: &str) -> Result<Option<&T>, Error> {
+        //this get_mut throws an error if the 'registry' HashMap has key type &String??
+        //forced to make keys owned Strings
+        //this didnt happen in v1?
         match self.registry.get_mut(key) {
             Some(v) => Ok(Some(v)),
             None => Ok(None)
