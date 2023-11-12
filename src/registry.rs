@@ -14,8 +14,8 @@ pub trait RegistryItem {
     const ITEM_TYPE: &'static str;
     type Identity<'s>: RegistryItem;
     fn construct_unverified<'t>(handle: TableHandle<'t>) -> Self::Identity<'t>;
-    fn verify() -> Result<(), Error>;
-    fn is_verified() -> bool;
+    fn verify(&mut self) -> Result<(), Error>;
+    fn is_verified(&self) -> bool;
 }
 pub struct Registry<'t, T: RegistryItem> {
     registry: HashMap<&'t String, T>,
@@ -44,35 +44,40 @@ impl<'st, T: RegistryItem> Registry<'st, T> {
             registry,
         }
     }
-    pub fn get(key: &str) -> Result<T, Error> {
+    pub fn get(key: &str) -> Result<&T::Identity<'_>, Error> {
         todo!();
     }
 }
 impl<'st> RegistryItem for BindMap<'st> {
     const ITEM_TYPE: &'static str = "map";
-    type Identity<'s> = BindMap<'st>;
+    type Identity<'s> = BindMap<'s>;
     fn construct_unverified<'t>(handle: TableHandle<'t>) -> Self::Identity<'t> {
-        todo!()
+        BindMap {
+            verified: false,
+            handle: handle.clone(),
+            bindings: RefMapping::with_capacity(handle.table.len())
+        }
     }
-    fn verify() -> Result<(), Error> {
+    fn verify(&mut self) -> Result<(), Error> {
         todo!()
     }
 
-    fn is_verified() -> bool {
-        todo!()
-    }
+    fn is_verified(&self) -> bool { self.verified }
 }
 impl<'st> RegistryItem for BindFunction<'st> {
     const ITEM_TYPE: &'static str = "function";
-    type Identity<'s> = BindFunction<'st>;
+    type Identity<'s> = BindFunction<'s>;
     fn construct_unverified<'t>(handle: TableHandle<'t>) -> Self::Identity<'t> {
-        todo!()
+        BindFunction {
+            verified: false,
+            handle,
+            shell: "",
+            command: "",
+        }
     }
-    fn verify() -> Result<(), Error> {
+    fn verify(&mut self) -> Result<(), Error> {
         todo!()
     }
 
-    fn is_verified() -> bool {
-        todo!()
-    }
+    fn is_verified(&self) -> bool { self.verified }
 }
