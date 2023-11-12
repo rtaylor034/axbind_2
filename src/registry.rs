@@ -8,8 +8,9 @@ use crate:: {
     warn_continue,
     warn
 };
-//-- Honestly overcomplex for what its worth
-//probably not worth for lazy evaluation
+//Honestly overcomplex for what its worth (just for lazy validation)
+//Its not even that expensive to validate a map/function
+//I dont even need too, I just like hashmaps better than treemaps becuase O oF OnE!1
 use anyhow::{Context, Error};
 use std::collections::HashMap;
 pub trait RegistryItem { 
@@ -19,14 +20,17 @@ pub trait RegistryItem {
     fn verify(&mut self) -> Result<&mut Self, Error>;
     fn is_verified(&self) -> bool;
 }
+#[derive(Debug)]
 pub struct Registry<T: RegistryItem> {
     registry: HashMap<String, T>,
 }
+#[derive(Debug)]
 pub struct BindMap<'t> {
     verified: bool,
     handle: TableHandle<'t>,
     pub bindings: RefMapping<'t>,
 }
+#[derive(Debug)]
 pub struct BindFunction<'t> {
     verified: bool,
     handle: TableHandle<'t>,

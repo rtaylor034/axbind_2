@@ -1,9 +1,10 @@
 use toml_context::*;
 use std::path::{Path, PathBuf};
-use thiserror::Error;
+use anyhow::Error;
 pub mod args;
 pub mod config;
 pub mod registry;
+pub mod tagfiles;
 pub type RefMapping<'t> = std::collections::HashMap<&'t String, &'t String>;
 
 #[macro_export]

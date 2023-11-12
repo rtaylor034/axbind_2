@@ -27,6 +27,10 @@ fn program() -> Result<(), Error> {
     let function_registry = registry::Registry::<registry::BindFunction>::from_handles(
         function_roots.iter()
         .map(|root| root.handle()));
+    eprintln!(" >> MAP REGISTRY :: {:#?}", map_registry);
+    eprintln!(" >> FUNCTION REGISTRY :: {:#?}", function_registry);
+    let tag_directory_paths = gfunc::fnav::rsearch_dir(&program_args.root_directory, master_config.tag_directory, gfunc::fnav::MetaType::Directory)
+        .with_context(|| format!("Could not read specified root directory {:?}", program_args.root_directory))?;
     Ok(())
 }
 
