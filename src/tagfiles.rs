@@ -6,6 +6,9 @@ use crate::{
     TableResult,
     config,
     Error,
+    registry::*,
+    OwnedMapping,
+    escaped_manip,
 };
 use anyhow::Context;
 pub const ENTRYPOINT_FILE: &'static str = "main.toml";
@@ -60,6 +63,47 @@ impl<'st> TagLayer<'st> {
             options: extract_value!(Table, handle.get("options")).optional()?
                 .map_or(Ok(LayerOptions::default()), |opt_table| LayerOptions::from_table(opt_table))?
         })
+    }
+    //kinda silly that mutable references are required, but calls verify()
+    pub fn generate_bindings<'r>(
+        &self,
+        map_registry: &mut Registry<BindMap<'r>>,
+        function_registry: &mut Registry<BindFunction>,
+        meta_options: &config::MetaOptions,
+        base_layer_options: &config::LayerOptions,
+    ) -> Result<OwnedMapping, Error> {
+        macro_rules! get { ($($args:expr),*) => { TagLayer::reg_get($($args,)*) } }
+        let (reference_keys, mut reference_values): (Vec<_>, Vec<_>) = get!(map_registry, self.map)?.bindings.clone().into_iter()
+            .unzip();
+        //can be done with pure inline map functions but done this way for readiblity (and also becuase
+        //harrddd)
+        for reference_value in reference_values.iter_mut() {
+            for remap_name in &self.remaps {
+                if let Some(remapped_value) = get!(map_registry, remap_name)?.bindings.get(reference_value) {
+                    *reference_value = *remapped_value;
+                }
+            }
+        }
+        let mut o_values: Vec<String> = reference_values.into_iter().map(|v| v.to_owned()).collect();
+        for o_value in o_values.iter_mut() {
+            for function_name in &self.functions {
+                *o_value = get!(function_registry, function_name)?.apply(o_value, meta_options)
+                    .with_context(|| format!("Error applying function '{}' to value '{}'", function_name, o_value))?;
+            }
+        }
+        use optwrite::OptWrite;
+        let layer_options = base_layer_options.clone().overriden_by(self.options.clone());
+        //should really make a function/macro for just replacing wildcardchar.
+        let o_keys: Vec<String> = reference_keys.into_iter()
+            .map(|key| escaped_manip(layer_options.key_format.unwrap(), meta_options.escape_char.unwrap(), |key_format|
+                key_format.replace(meta_options.wildcard_char.unwrap(), key)))
+            .collect();
+
+        Ok(OwnedMapping::from_iter(std::iter::zip(o_keys, o_values)))
+    }
+    fn reg_get<S: AsRef<str>, T: RegistryItem>(registry: &mut Registry<T>, key: S) -> Result<&T, Error> {
+        registry.verify_get(&key)?.with_context(|| format!("No {} with name '{}' could be found.",
+            T::ITEM_TYPE, key.as_ref()))
     }
 }
 fn extract_array_strings<'t>(handle: PotentialValueHandle<'t>) -> TableResult<Vec<&'t String>> {

@@ -51,12 +51,13 @@ impl<T: RegistryItem> Registry<T> {
         }
     }
     //awkward tbh
-    pub fn verify_get(&mut self, key: &str) -> Result<Option<&T>, Error> {
+    pub fn verify_get<S: AsRef<str>>(&mut self, key: S) -> Result<Option<&T>, Error> {
         //this get_mut throws an error if the 'registry' HashMap has key type &String??
         //forced to make keys owned Strings
         //this didnt happen in v1?
-        match self.registry.get_mut(key) {
-            Some(v) => Ok(Some(v)),
+        match self.registry.get_mut(key.as_ref()) {
+            Some(v) => Ok(Some(v.verify().
+                with_context(|| format!("Error interpreting {} '{}'", T::ITEM_TYPE, key.as_ref()))?)),
             None => Ok(None)
         }
     }
@@ -102,4 +103,25 @@ impl<'st> RegistryItem for BindFunction<'st> {
     }
 
     fn is_verified(&self) -> bool { self.verified }
+}
+impl BindFunction<'_> {
+    pub fn apply(&self, key: &str, meta_options: &crate::config::MetaOptions) -> Result<String, Error> {
+        use crate::escaped_manip;
+        use std::process::Command;
+        let command = escaped_manip(
+            self.command,
+            meta_options.escape_char.unwrap(),
+            |text| text.replace(meta_options.wildcard_char.unwrap(), key),
+        );
+        Ok(std::str::from_utf8(
+            Command::new(self.shell)
+            //awkward assumption of '-c'; dont want to make user specify this for every function(?)
+                .arg("-c")
+                .arg(&command)
+                .output()?
+                .stdout
+                .as_slice(),
+        )?
+        .to_owned())
+    }
 }

@@ -7,6 +7,7 @@ pub mod config;
 pub mod registry;
 pub mod tagfiles;
 pub type RefMapping<'t> = std::collections::HashMap<&'t String, &'t String>;
+pub type OwnedMapping = std::collections::HashMap<String, String>;
 
 #[macro_export]
 macro_rules! warn {
