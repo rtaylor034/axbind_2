@@ -9,6 +9,7 @@ use crate:: {
     Path,
     Error,
     Context,
+    OptWrite,
 };
 #[derive(Clone, Debug)]
 pub struct MasterConfig<'t> {
@@ -19,16 +20,16 @@ pub struct MasterConfig<'t> {
     pub layer_options: LayerOptions<'t>,
     pub meta_options: MetaOptions<'t>,
 }
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug, Default, OptWrite)]
 pub struct GroupOptions<'t> {
     pub axbind_file_format: Option<&'t String>,
 }
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug, Default, OptWrite)]
 pub struct LayerOptions<'t> {
     pub escape_char: Option<char>,
     pub key_format: Option<&'t String>,
 }
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug, Default, OptWrite)]
 pub struct MetaOptions<'t> {
     pub escape_char: Option<char>,
     pub wildcard_char: Option<char>,

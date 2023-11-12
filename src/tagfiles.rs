@@ -7,7 +7,8 @@ use crate::{
     config,
     Error,
 };
-pub const ENTRYPOINT_PATH: &'static str = "main.toml";
+use anyhow::Context;
+pub const ENTRYPOINT_FILE: &'static str = "main.toml";
 pub struct TagSpecification<'t> {
     //silly field
     pub group_paths: Vec<&'t str>,
@@ -29,20 +30,21 @@ impl<'st> TagSpecification<'st> {
         Ok(TagSpecification {
             group_paths: extract_array_strings(handle.get("groups")).optional()?
                 .map(|o| o.iter().map(|v| v.as_str()).collect())
-                .unwrap_or(vec![ENTRYPOINT_PATH]),
+                .unwrap_or(vec![ENTRYPOINT_FILE]),
         })
     }
 }
 impl<'st> TagGroup<'st> {
     pub fn from_table<'t>(handle: TableHandle<'t>) -> Result<TagGroup<'t>, Error> {
         use config::GroupOptions;
-        //truly insane
+        //insane
         Ok(TagGroup {
             files: extract_array_strings(handle.get("files"))?,
             layers: extract_value!(Array, handle.get("layers"))?
                 .into_iter()
                 .map(|t| TagLayer::from_table(extract_value!(Table, t)?))
-                .collect::<Result<Vec<TagLayer>, Error>>()?,
+                .collect::<Result<Vec<TagLayer>, Error>>()
+                .context("Error while interpreting binding layer.")?,
             options: extract_value!(Table, handle.get("options")).optional()?
                 .map_or(Ok(GroupOptions::default()), |opt_table| GroupOptions::from_table(opt_table))?
         })
