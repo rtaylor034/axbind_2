@@ -1,0 +1,10 @@
+axbind_map = "testinclude"
+
+[map]
+'@INCLUDE' = [
+    'include_testmaps/map_one',
+    'include_testmaps/map_two',
+    'include_testmaps/map_three',
+]
+map='testinclude'
+includes='three'

@@ -1,0 +1,8 @@
+VALUE = VALUE
+value_one = value_one
+FUNC_TWO(message) = FUNC_TWO(message)
+one = one
+ONE = ONE
+@@to_key@@ = FUNC_TWO(value_two)
+world = world
+@value_one@ = @value_one@

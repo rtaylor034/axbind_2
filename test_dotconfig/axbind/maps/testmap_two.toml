@@ -1,0 +1,7 @@
+axbind_map = "testmap_two"
+
+[map]
+key='value_two'
+number='two'
+secret='message'
+

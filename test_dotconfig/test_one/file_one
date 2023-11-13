@@ -1,0 +1,9 @@
+
+world = world
+value_one = value_one
+one = one
+value_two = value_two
+TWO = TWO
+message = message
+2hello2 = 2hello2
+FUNC_TWO(FUNC_ONE(three)) = FUNC_ONE(FUNC_TWO(three))

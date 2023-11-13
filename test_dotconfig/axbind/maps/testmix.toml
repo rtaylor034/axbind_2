@@ -1,0 +1,8 @@
+axbind_map = "testmix"
+
+[map]
+one = 'ONE'
+two = 'TWO'
+three = 'THREE'
+value = 'VALUE'
+

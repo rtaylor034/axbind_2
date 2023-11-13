@@ -1,0 +1,5 @@
+axbind_function = 'testfunction_one'
+
+[function]
+shell = 'sh'
+command = 'echo -n "FUNC_ONE(^)"'

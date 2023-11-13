@@ -1,0 +1,12 @@
+
+files = [
+    'file_two',
+    'file_three'
+]
+
+[[layers]]
+map = 'testinclude'
+options.key_format = '|^^|^'
+[[layers]]
+map = 'testmix'
+options.escape_sequence = '|'

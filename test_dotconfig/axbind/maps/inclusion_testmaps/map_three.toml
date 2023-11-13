@@ -1,0 +1,6 @@
+axbind_map = "include_testmaps/map_three"
+
+[map]
+key_three='value_3'
+remap_me='number'
+override='map_three'

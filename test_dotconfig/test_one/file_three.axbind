@@ -1,0 +1,8 @@
+@value@ = VALUE
+@key@ = value_one
+@secret@ = FUNC_TWO(message)
+@number@ = one
+@@number@@ = ONE
+@@to_key@@ = FUNC_TWO(value_two)
+@hello@ = world
+@@key@@ = @value_one@

@@ -1,0 +1,7 @@
+axbind_map = "testmap_three"
+
+[map]
+key='value_three'
+number='three'
+foo='bar'
+

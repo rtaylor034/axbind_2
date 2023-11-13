@@ -1,0 +1,11 @@
+
+^key_one^ = value_1
+^key_two^ = value_2
+^override^ = map_three
+@one@ = ONE
+@two@ = TWO
+|@one@ = |@one@
+@|one@ = |@one@
+@two@|| = TWO||
+||@three@ = ||THREE
+@val@ue@ = @val@ue@

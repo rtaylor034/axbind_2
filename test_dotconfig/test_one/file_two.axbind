@@ -1,0 +1,10 @@
+
+1hello1 = world
+1key1 = value_one
+1number1 = one
+2key2 = value_two
+2number2 = TWO
+2secret2 = message
+2hello2 = 2hello2
+3number3 = FUNC_ONE(FUNC_TWO(three))
+3key3 = FUNC_ONE(FUNC_TWO(value_three))

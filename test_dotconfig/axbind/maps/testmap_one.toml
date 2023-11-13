@@ -1,0 +1,7 @@
+axbind_map = "testmap_one"
+
+[map]
+key='value_one'
+number='one'
+hello='world'
+

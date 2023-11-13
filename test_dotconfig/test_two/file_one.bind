@@ -1,0 +1,9 @@
+
+@key_one@bruh = value_1
+@key_two@ = value_2
+@key_three@ = value_3
+@override@bruh bruh= map_three
+@remap_me@ = TWO
+%key_two% = FUNC_ONE(value_2)
+%remap_me% = FUNC_ONE(number)
+bruhbruh = bruhbruh

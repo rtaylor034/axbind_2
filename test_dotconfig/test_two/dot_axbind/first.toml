@@ -1,0 +1,12 @@
+files = [
+    'file_one',
+]
+options.axbind_file_format = '^.bind'
+[[layers]]
+map = 'testinclude'
+remaps = [ 'testmap_two', 'testmix' ]
+options.escape_sequence = 'bruh'
+[[layers]]
+map = 'testinclude'
+functions = [ 'testfunction_one' ]
+options.key_format = '%^%'
