@@ -12,4 +12,4 @@ axbind_file_format = '^.axbind'
 
 [options.layer]
 key_format = '@^@'
-escape_char = '\'
+escape_char = '|'

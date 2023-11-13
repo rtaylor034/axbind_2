@@ -94,7 +94,7 @@ fn program() -> Result<(), Error> {
                                 &master_config.meta_options,
                                 master_config.layer_options.key_format.unwrap().as_str())
                                 .context("Error evaluating bindings (layer skipped).")?;
-                            let corasick = aho_corasick::AhoCorasick::new(bind_keys)
+                            let corasick = aho_corasick::AhoCorasick::new(&bind_keys)
                                 .context("Error creating 'aho_corasick' object; this is a rare error that should not occur (unless very irregular map keys are specified?), see rust docs for aho_corasick::AhoCorasick::new()")?;
                             let escape_char = master_config.layer_options.escape_char.clone()
                                 .overriden_by(layer.options.escape_char).unwrap();
