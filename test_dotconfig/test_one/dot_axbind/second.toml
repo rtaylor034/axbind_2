@@ -1,10 +1,15 @@
 
 files = [
-    'file3',
-    'file4',
+    'file_three'
 ]
 
 #single layer
 [[layers]]
-map = 'other_map'
-options.escape_char = 'Y'
+map = 'testmap_one'
+[[layers]]
+map = 'testmix'
+[[layers]]
+map = 'testmap_two'
+remaps = ['testmix']
+functions = ['testfunction_two']
+

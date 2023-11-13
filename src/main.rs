@@ -1,21 +1,24 @@
 use anyhow::{Context, Error};
 use axbind::*;
 use toml_context::TableRoot;
+use std::path::{Path, PathBuf};
 fn program() -> Result<(), Error> {
     let program_args = args::ProgramArgs::from_runinfo(gfunc::run::RunInfo::get_from_env());
     let master_root = gfunc::for_until(&program_args.config_paths, |path| toml_context::TableRoot::from_file_path(path).ok())
         .with_context(|| format!("No valid config files could be found -- paths checked: {:#?}\n (check for invalid toml syntax)",
                                  program_args.config_paths))?;
-    let master_config = config::MasterConfig::from_table(master_root.handle())?;
+    let config_parent_path = PathBuf::from(Path::new(master_root.context.branch.as_ref()).parent().unwrap());
+    let master_config = config::MasterConfig::from_table(master_root.handle())
+        .context("Error interpreting config file.")?;
     eprintln!(" >> MASTER CONFIG :: {:#?}", master_config);
     macro_rules! get_registry_roots {
         ($name:expr, $path:expr) => {
-            gfunc::fnav::rsearch_dir_pred($path, |file_path| file_path.is_file())
-                .with_context(|| format!("Error reading {} directory. ({})", $name, $path))?
+            gfunc::fnav::rsearch_dir_pred(config_parent_path.join($path), |file_path| file_path.is_file())
+                .with_context(|| format!("Error reading {} directory \"{}\"", $name, $path))?
                 .into_iter()
                 .filter_map(|path| {
                     warn!(TableRoot::from_file_path(&path).with_context(|| format!(
-                        "Cannot parse file {:?} to toml. (file skipped)",
+                        "Cannot parse file {:?} to toml (file skipped).",
                         path
                     )))
                     .ok()
@@ -55,16 +58,16 @@ fn program() -> Result<(), Error> {
         warn_continue!(capture_err!( {
             let specification_root = TableRoot::from_file_path(
                 tag_directory_path.join(tagfiles::ENTRYPOINT_FILE))
-                .with_context(|| format!("Cannot parse entrypoint file ({}) to toml.", tagfiles::ENTRYPOINT_FILE))?;
+                .with_context(|| format!("Cannot parse entrypoint file \"{}\" to toml (tag directory skipped).", tagfiles::ENTRYPOINT_FILE))?;
             let specification = tagfiles::TagSpecification::from_table(specification_root.handle())?;
             for group_name in specification.group_paths {
                 warn_continue!(capture_err!( {
                     use optwrite::OptWrite;
                     let group_root = TableRoot::from_file_path(
                         tag_directory_path.join(group_name))
-                        .context("Cannot parse binding group to toml.")?;
+                        .context("Cannot parse binding group to toml (group skipped).")?;
                     let group = tagfiles::TagGroup::from_table(group_root.handle())
-                        .context("Error while interpreting binding group.")?;
+                        .context("Error while interpreting binding group (group skipped).")?;
                     let group_options = master_config.group_options.clone().overriden_by(group.options);
                     let mut file_buffer_tuples = {
                         let mut o: Vec<(std::path::PathBuf, String)> = Vec::with_capacity(group.files.len());
@@ -73,12 +76,12 @@ fn program() -> Result<(), Error> {
                             let axbind_file_path =
                                 tag_directory_path.parent().unwrap().join(escaped_manip(
                                     group_options.axbind_file_format.unwrap().as_str(),
-                                    master_config.meta_options.wildcard_char.unwrap(),
+                                    master_config.meta_options.escape_char.unwrap(),
                                     |format| format.replace(
                                         master_config.meta_options.wildcard_char.unwrap(),
                                         file_name)));
-                            o.push((affecting_file_path, std::fs::read_to_string(&axbind_file_path)
-                                .with_context(|| format!("Error reading axbind file {:?}.", axbind_file_path))?));
+                            o.push((affecting_file_path, warn_continue!(std::fs::read_to_string(&axbind_file_path)
+                                .with_context(|| format!("Error reading axbind file {:?} (file skipped).", axbind_file_path)))));
                         }
                         o
                     };
@@ -90,7 +93,7 @@ fn program() -> Result<(), Error> {
                                 &mut function_registry,
                                 &master_config.meta_options,
                                 master_config.layer_options.key_format.unwrap().as_str())
-                                .context("Error evaluating bindings")?;
+                                .context("Error evaluating bindings (layer skipped).")?;
                             let corasick = aho_corasick::AhoCorasick::new(bind_keys)
                                 .context("Error creating 'aho_corasick' object; this is a rare error that should not occur (unless very irregular map keys are specified?), see rust docs for aho_corasick::AhoCorasick::new()")?;
                             let escape_char = master_config.layer_options.escape_char.clone()
@@ -100,15 +103,19 @@ fn program() -> Result<(), Error> {
                                     corasick.replace_all(text, bind_values.as_slice())
                                 });
                             }
-                        }).with_context(|| format!("Error in layer {}.", i)));
+                            //absolute bollocks, will 'fix' later
+                        }).with_context(|| format!("IN - layer: {}", i))
+                        .with_context(|| format!("IN - binding group: \"{}\"", group_name))
+                        .with_context(|| format!("IN - tag directory: {:?}", tag_directory_path)));
                     }
                     for (file_path, buffer) in file_buffer_tuples {
                         std::fs::write(&file_path, buffer)
-                            .with_context(|| format!("Unable to write to file {:?}.", file_path))?;
+                            .with_context(|| format!("Unable to write to file {:?} (file skipped).", file_path))?;
                     }
-                }).with_context(|| format!("Error in tag group '{}'.", group_name)));
+                }).with_context(|| format!("binding group: \"{}\"", group_name))
+                .with_context(|| format!("tag directory: {:?}", tag_directory_path)));
             }
-        }).with_context(|| format!("Error in tag directory {:?}", tag_directory_path)));
+        }).with_context(|| format!("tag directory: {:?}", tag_directory_path)));
     }
     Ok(())
 }
@@ -116,12 +123,7 @@ fn program() -> Result<(), Error> {
 fn main() {
     match program() {
         Err(e) => {
-            eprintln!("[FATAL!]");
-            let mut spaces = String::new();
-            for (i, cause) in e.chain().enumerate() {
-                spaces.push(' ');
-                eprintln!(" ({}){}> {}", i, spaces, cause);
-            }
+            display_err!("[FATAL!]", e);
         }
         Ok(_) => eprintln!(" >> OK <<"),
     }

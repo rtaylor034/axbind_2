@@ -37,7 +37,7 @@ impl<T: RegistryItem> Registry<T> {
             HashMap::from_iter(handles.into_iter().filter_map(|handle| {
                 warn!(
                     extract_value!(String, handle.get(name_key.as_str())).with_context(|| format!(
-                        "No '{}' key found in file '{}'. (file skipped)",
+                        "No '{}' key found in file \"{}\" (file skipped).",
                         name_key, handle.context
                     ))
                 )
@@ -53,7 +53,7 @@ impl<T: RegistryItem> Registry<T> {
         //this didnt happen in v1?
         match self.registry.get_mut(key.as_ref()) {
             Some(v) => Ok(Some(v.verify().with_context(|| {
-                format!("Error interpreting {} '{}'", T::ITEM_TYPE, key.as_ref())
+                format!("Error interpreting the {} '{}'", T::ITEM_TYPE, key.as_ref())
             })?)),
             None => Ok(None),
         }
@@ -73,7 +73,7 @@ impl<'st> RegistryItem for BindMap<'st> {
         if self.is_verified() {
             return Ok(self);
         }
-        let bind_table = extract_value!(Table, self.handle.get("bindings"))?;
+        let bind_table = extract_value!(Table, self.handle.get("map"))?;
         self.bindings = RefMapping::with_capacity(bind_table.table.len());
         for (key, bind_handle) in bind_table {
             self.bindings
@@ -101,8 +101,9 @@ impl<'st> RegistryItem for BindFunction<'st> {
         if self.is_verified() {
             return Ok(self);
         }
-        self.shell = extract_value!(String, self.handle.get("shell"))?;
-        self.command = extract_value!(String, self.handle.get("command"))?;
+        let handle = extract_value!(Table, self.handle.get("function"))?;
+        self.shell = extract_value!(String, handle.get("shell"))?;
+        self.command = extract_value!(String, handle.get("command"))?;
         Ok(self)
     }
 

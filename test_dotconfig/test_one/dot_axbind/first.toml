@@ -1,23 +1,16 @@
 files = [
-    'file1',
-    'file2',
+    'file_one',
+    'file_two'
 ]
 
-[options]
-axbind_file_format = '.altbind'
-
 [[layers]]
-map = 'meta_map'
-remaps = [
-    'meta_remap1',
-    'meta_remap2'
-]
-functions = [
-    'myfunction'
-]
-#NOTE - [options] header does not work here!
-# If a header is really desired, must be [[layers.options]]
-options.key_format = '?^?'
+map = 'testmap_one'
+options.key_format = '1^1'
 [[layers]]
-map = 'normal_map'
-options.key_format = '@^@'
+map = 'testmap_two'
+options.key_format = '2^2'
+remaps = [ 'testmix' ]
+[[layers]]
+map = 'testmap_three'
+functions = [ 'testfunction_one', 'testfunction_two' ]
+options.key_format = '3^3'

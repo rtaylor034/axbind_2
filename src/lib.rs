@@ -10,17 +10,25 @@ pub type RefMapping<'t> = std::collections::HashMap<&'t String, &'t String>;
 pub type OwnedMapping = std::collections::HashMap<String, String>;
 
 #[macro_export]
+macro_rules! display_err {
+    ($tag:expr, $error:expr) => {
+        eprintln!("{}", $tag);
+        let mut spaces = String::new();
+        let mut cause_chain = $error.chain().into_iter();
+        eprintln!(" └ {} ", cause_chain.next().unwrap());
+        for cause in cause_chain {
+            spaces.push_str("  ");
+            eprintln!(" {}└ {}", spaces, cause);
+        }
+    }
+}
+#[macro_export]
 macro_rules! warn {
     ($result:expr) => {{
         match $result {
             Ok(v) => Ok(v),
             Err(e) => {
-                eprintln!("[WARN]");
-                let mut spaces = String::new();
-                for (i, cause) in e.chain().enumerate() {
-                    spaces.push(' ');
-                    eprintln!(" ({}){}> {}", i, spaces, cause);
-                }
+                $crate::display_err!("[WARNING]", e);
                 Err(e)
             }
         }

@@ -1,5 +1,0 @@
-axbind_function = 'testfunction'
-
-[function]
-shell = 'sh'
-command = 'echo -n "modified ^"'

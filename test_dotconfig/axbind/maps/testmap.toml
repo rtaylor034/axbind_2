@@ -1,9 +1,0 @@
-axbind_map = "testmap"
-
-[map]
-#would-be duplicate keys are overwritten.
-'@INCLUDE' = [
-    'other_map',
-    'other_map2',
-]
-key='value'
