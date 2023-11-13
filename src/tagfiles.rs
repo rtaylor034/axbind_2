@@ -1,6 +1,6 @@
 use crate::{
     config, escaped_manip, extract_value, registry::*, Error, PotentialValueHandle, TableHandle,
-    TableResult, TableResultOptional,
+    TableResult, TableResultOptional, extract_array_strings,
 };
 use anyhow::Context;
 pub const ENTRYPOINT_FILE: &'static str = "main.toml";
@@ -124,7 +124,7 @@ impl<'st> TagLayer<'st> {
 
         Ok((o_keys, o_values))
     }
-    fn reg_get<S: AsRef<str>, T: RegistryItem>(
+    fn reg_get<S: AsRef<str>, T: RegistryItem<Identity<'st> = T>>(
         registry: &mut Registry<T>,
         key: S,
     ) -> Result<&T, Error> {
@@ -136,10 +136,4 @@ impl<'st> TagLayer<'st> {
             )
         })
     }
-}
-fn extract_array_strings<'t>(handle: PotentialValueHandle<'t>) -> TableResult<Vec<&'t String>> {
-    extract_value!(Array, handle)?
-        .into_iter()
-        .map(|v| extract_value!(String, v))
-        .collect()
 }

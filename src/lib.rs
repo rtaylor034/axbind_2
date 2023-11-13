@@ -58,3 +58,9 @@ where
     o.push_str(manip(current_chunk).as_str());
     o
 }
+pub fn extract_array_strings<'t>(handle: PotentialValueHandle<'t>) -> TableResult<Vec<&'t String>> {
+    extract_value!(Array, handle)?
+        .into_iter()
+        .map(|v| extract_value!(String, v))
+        .collect()
+}
