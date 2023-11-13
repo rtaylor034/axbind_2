@@ -4,7 +4,7 @@ function_directory = "functions"
 tag_directory = "dot_axbind"
 
 [options.meta]
-escape_char = '|'
+escape_sequence = '|'
 wildcard_char = '^'
 
 [options.group]
@@ -12,4 +12,4 @@ axbind_file_format = '^.axbind'
 
 [options.layer]
 key_format = '@^@'
-escape_char = '|'
+escape_sequence = '@DISABLED'

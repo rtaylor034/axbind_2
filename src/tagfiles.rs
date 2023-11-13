@@ -116,7 +116,7 @@ impl<'st> TagLayer<'st> {
         let o_keys: Vec<String> = reference_keys
             .into_iter()
             .map(|key| {
-                escaped_manip(key_format, meta_options.escape_char.unwrap(), |chunk| {
+                escaped_manip(key_format, meta_options.escape_sequence.unwrap(), |chunk| {
                     chunk.replace(meta_options.wildcard_char.unwrap(), key)
                 })
             })

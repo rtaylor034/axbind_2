@@ -76,7 +76,7 @@ fn program() -> Result<(), Error> {
                             let axbind_file_path =
                                 tag_directory_path.parent().unwrap().join(escaped_manip(
                                     group_options.axbind_file_format.unwrap().as_str(),
-                                    master_config.meta_options.escape_char.unwrap(),
+                                    master_config.meta_options.escape_sequence.unwrap(),
                                     |format| format.replace(
                                         master_config.meta_options.wildcard_char.unwrap(),
                                         file_name)));
@@ -96,10 +96,10 @@ fn program() -> Result<(), Error> {
                                 .context("Error evaluating bindings (layer skipped).")?;
                             let corasick = aho_corasick::AhoCorasick::new(&bind_keys)
                                 .context("Error creating 'aho_corasick' object; this is a rare error that should not occur (unless very irregular map keys are specified?), see rust docs for aho_corasick::AhoCorasick::new()")?;
-                            let escape_char = master_config.layer_options.escape_char.clone()
-                                .overriden_by(layer.options.escape_char).unwrap();
+                            let escape_sequence = master_config.layer_options.escape_sequence.clone()
+                                .overriden_by(layer.options.escape_sequence).unwrap();
                             for (_, buffer) in file_buffer_tuples.iter_mut() {
-                                *buffer = escaped_manip(buffer, escape_char, |text| {
+                                *buffer = escaped_manip(buffer, escape_sequence, |text| {
                                     corasick.replace_all(text, bind_values.as_slice())
                                 });
                             }

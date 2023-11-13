@@ -16,14 +16,13 @@ pub struct GroupOptions<'t> {
 }
 #[derive(Clone, Debug, Default, OptWrite)]
 pub struct LayerOptions<'t> {
-    pub escape_char: Option<char>,
+    pub escape_sequence: Option<&'t String>,
     pub key_format: Option<&'t String>,
 }
 #[derive(Clone, Debug, Default, OptWrite)]
 pub struct MetaOptions<'t> {
-    pub escape_char: Option<char>,
+    pub escape_sequence: Option<&'t String>,
     pub wildcard_char: Option<char>,
-    _p: core::marker::PhantomData<&'t str>,
 }
 impl<'st> MasterConfig<'st> {
     pub fn from_table<'t>(handle: TableHandle<'t>) -> Result<MasterConfig<'t>, Error> {
@@ -57,13 +56,13 @@ impl<'st> GroupOptions<'st> {
 impl<'st> LayerOptions<'st> {
     pub fn from_table_forced<'t>(handle: TableHandle<'t>) -> Result<LayerOptions<'t>, Error> {
         Ok(LayerOptions {
-            escape_char: Some(extract_char(handle.get("escape_char"))?),
+            escape_sequence: Some(extract_value!(String, handle.get("escape_sequence"))?),
             key_format: Some(extract_value!(String, handle.get("key_format"))?),
         })
     }
     pub fn from_table<'t>(handle: TableHandle<'t>) -> Result<LayerOptions<'t>, Error> {
         Ok(LayerOptions {
-            escape_char: extract_char_optional(handle.get("escape_char"))?,
+            escape_sequence: extract_value!(String, handle.get("escape_sequence")).optional()?,
             key_format: extract_value!(String, handle.get("key_format")).optional()?,
         })
     }
@@ -71,16 +70,14 @@ impl<'st> LayerOptions<'st> {
 impl<'st> MetaOptions<'st> {
     pub fn from_table_forced<'t>(handle: TableHandle<'t>) -> Result<MetaOptions<'t>, Error> {
         Ok(MetaOptions {
-            escape_char: Some(extract_char(handle.get("escape_char"))?),
+            escape_sequence: Some(extract_value!(String, handle.get("escape_sequence"))?),
             wildcard_char: Some(extract_char(handle.get("wildcard_char"))?),
-            _p: core::marker::PhantomData,
         })
     }
     pub fn from_table<'t>(handle: TableHandle<'t>) -> Result<MetaOptions<'t>, Error> {
         Ok(MetaOptions {
-            escape_char: extract_char_optional(handle.get("escape_char"))?,
+            escape_sequence: extract_value!(String, handle.get("escape_sequence")).optional()?,
             wildcard_char: extract_char_optional(handle.get("wildcard_char"))?,
-            _p: core::marker::PhantomData,
         })
     }
 }

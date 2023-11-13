@@ -142,7 +142,7 @@ impl BindFunction<'_> {
     ) -> Result<String, Error> {
         use crate::escaped_manip;
         use std::process::Command;
-        let command = escaped_manip(self.command, meta_options.escape_char.unwrap(), |text| {
+        let command = escaped_manip(self.command, meta_options.escape_sequence.unwrap(), |text| {
             text.replace(meta_options.wildcard_char.unwrap(), key)
         });
         Ok(std::str::from_utf8(

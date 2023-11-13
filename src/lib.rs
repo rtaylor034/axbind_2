@@ -43,10 +43,14 @@ macro_rules! warn_continue {
         }
     }};
 }
-pub fn escaped_manip<'s, F>(text: &'s str, escape: char, manip: F) -> String
+pub fn escaped_manip<'s, S, F>(text: &'s str, escape: S, manip: F) -> String
 where
     F: Fn(&'s str) -> String,
+    S: AsRef<str>,
 {
+    let escape = escape.as_ref();
+    //disabled check
+    if escape == "@DISABLED" { return manip(text); }
     let mut o = String::with_capacity(text.len());
     let mut current_chunk = text;
     while let Some((mut left, right)) = current_chunk.split_once(escape) {
