@@ -71,7 +71,7 @@ impl<'st> TagLayer<'st> {
         function_registry: &mut Registry<BindFunction>,
         meta_options: &config::MetaOptions,
         base_layer_options: &config::LayerOptions,
-    ) -> Result<OwnedMapping, Error> {
+    ) -> Result<(Vec<String>, Vec<String>), Error> {
         macro_rules! get { ($($args:expr),*) => { TagLayer::reg_get($($args,)*) } }
         let (reference_keys, mut reference_values): (Vec<_>, Vec<_>) = get!(map_registry, self.map)?.bindings.clone().into_iter()
             .unzip();
@@ -99,7 +99,7 @@ impl<'st> TagLayer<'st> {
                 key_format.replace(meta_options.wildcard_char.unwrap(), key)))
             .collect();
 
-        Ok(OwnedMapping::from_iter(std::iter::zip(o_keys, o_values)))
+        Ok((o_keys, o_values))
     }
     fn reg_get<S: AsRef<str>, T: RegistryItem>(registry: &mut Registry<T>, key: S) -> Result<&T, Error> {
         registry.verify_get(&key)?.with_context(|| format!("No {} with name '{}' could be found.",

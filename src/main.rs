@@ -21,10 +21,10 @@ fn program() -> Result<(), Error> {
     }
     let map_roots = get_registry_roots!("map", master_config.map_directory);
     let function_roots = get_registry_roots!("function", master_config.function_directory);
-    let map_registry = registry::Registry::<registry::BindMap>::from_handles(
+    let mut map_registry = registry::Registry::<registry::BindMap>::from_handles(
         map_roots.iter()
         .map(|root| root.handle()));
-    let function_registry = registry::Registry::<registry::BindFunction>::from_handles(
+    let mut function_registry = registry::Registry::<registry::BindFunction>::from_handles(
         function_roots.iter()
         .map(|root| root.handle()));
     eprintln!(" >> MAP REGISTRY :: {:#?}", map_registry);
@@ -47,8 +47,14 @@ fn program() -> Result<(), Error> {
             let group = warn_continue!(tagfiles::TagGroup::from_table(group_root.handle())
                 .context("Error while interpreting binding group."));
             let group_options = master_config.group_options.clone().overriden_by(group.options);
-            for layer in group.layers {
-                let layer_options = master_config.layer_options.clone().overriden_by(layer.options);
+            for (i, layer) in group.layers.iter().enumerate() {
+                let (bind_keys, bind_values) = warn_continue!(layer.generate_bindings(
+                    &mut map_registry,
+                    &mut function_registry,
+                    &master_config.meta_options,
+                    &master_config.layer_options)
+                    .with_context(|| format!("Error evaluating layer {} in group '{}' (in tag directory {:?}).", i+1, group_name, tag_directory_path)));
+                let searcher = aho_corasick::AhoCorasick::new(bind_keys);
 
                 //4th layer nested for loop!!1!
                 for file_name in &group.files {
