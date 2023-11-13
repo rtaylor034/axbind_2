@@ -91,6 +91,10 @@ fn program() -> Result<(), Error> {
                             }
                         }).with_context(|| format!("Error in layer {}.", i)));
                     }
+                    for (file_path, buffer) in file_buffer_tuples {
+                        std::fs::write(&file_path, buffer)
+                            .with_context(|| format!("Unable to write to file {:?}.", file_path))?;
+                    }
                 }).with_context(|| format!("Error in tag group '{}'.", group_name)));
             }
         }).with_context(|| format!("Error in tag directory {:?}", tag_directory_path)));
