@@ -70,7 +70,7 @@ impl<'st> TagLayer<'st> {
         map_registry: &mut Registry<BindMap<'r>>,
         function_registry: &mut Registry<BindFunction>,
         meta_options: &config::MetaOptions,
-        base_layer_options: &config::LayerOptions,
+        base_key_format: &str,
     ) -> Result<(Vec<String>, Vec<String>), Error> {
         macro_rules! get { ($($args:expr),*) => { TagLayer::reg_get($($args,)*) } }
         let (reference_keys, mut reference_values): (Vec<_>, Vec<_>) = get!(map_registry, self.map)?.bindings.clone().into_iter()
@@ -92,11 +92,11 @@ impl<'st> TagLayer<'st> {
             }
         }
         use optwrite::OptWrite;
-        let layer_options = base_layer_options.clone().overriden_by(self.options.clone());
+        let key_format = Some(base_key_format).overriden_by(self.options.key_format.map(|v| v.as_str())).unwrap();
         //should really make a function/macro for just replacing wildcardchar.
         let o_keys: Vec<String> = reference_keys.into_iter()
-            .map(|key| escaped_manip(layer_options.key_format.unwrap(), meta_options.escape_char.unwrap(), |key_format|
-                key_format.replace(meta_options.wildcard_char.unwrap(), key)))
+            .map(|key| escaped_manip(key_format, meta_options.escape_char.unwrap(), |chunk|
+                chunk.replace(meta_options.wildcard_char.unwrap(), key)))
             .collect();
 
         Ok((o_keys, o_values))

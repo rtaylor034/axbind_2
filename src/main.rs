@@ -55,25 +55,39 @@ fn program() -> Result<(), Error> {
                     let group = tagfiles::TagGroup::from_table(group_root.handle())
                         .context("Error while interpreting binding group.")?;
                     let group_options = master_config.group_options.clone().overriden_by(group.options);
+                    let mut file_buffer_tuples = {
+                        let mut o: Vec<(std::path::PathBuf, String)> = Vec::with_capacity(group.files.len());
+                        for file_name in &group.files {
+                            let affecting_file_path = tag_directory_path.parent().unwrap().join(file_name);
+                            let axbind_file_path =
+                                tag_directory_path.parent().unwrap().join(escaped_manip(
+                                    group_options.axbind_file_format.unwrap().as_str(),
+                                    master_config.meta_options.wildcard_char.unwrap(),
+                                    |format| format.replace(
+                                        master_config.meta_options.wildcard_char.unwrap(),
+                                        file_name)));
+                            o.push((affecting_file_path, std::fs::read_to_string(&axbind_file_path)
+                                .with_context(|| format!("Error reading axbind file {:?}.", axbind_file_path))?));
+                        }
+                        o
+                    };
                     for (i, layer) in group.layers.iter().enumerate() {
                         warn_continue!(capture_err!( {
+                            use optwrite::OptWrite;
                             let (bind_keys, bind_values) = layer.generate_bindings(
                                 &mut map_registry,
                                 &mut function_registry,
                                 &master_config.meta_options,
-                                &master_config.layer_options)
+                                master_config.layer_options.key_format.unwrap().as_str())
                                 .context("Error evaluating bindings")?;
-                            let searcher = aho_corasick::AhoCorasick::new(bind_keys)
+                            let corasick = aho_corasick::AhoCorasick::new(bind_keys)
                                 .context("Error creating 'aho_corasick' object; this is a rare error that should not occur (unless very irregular map keys are specified?), see rust docs for aho_corasick::AhoCorasick::new()")?;
-                            for file_name in &group.files {
-                                let affecting_file_path = tag_directory_path.parent().unwrap().join(file_name);
-                                let axbind_file_path =
-                                    tag_directory_path.parent().unwrap().join(escaped_manip(
-                                        group_options.axbind_file_format.unwrap().as_str(),
-                                        master_config.meta_options.wildcard_char.unwrap(),
-                                        |format| format.replace(
-                                            master_config.meta_options.wildcard_char.unwrap(),
-                                            file_name)));
+                            let escape_char = master_config.layer_options.escape_char.clone()
+                                .overriden_by(layer.options.escape_char).unwrap();
+                            for (_, buffer) in file_buffer_tuples.iter_mut() {
+                                *buffer = escaped_manip(buffer, escape_char, |text| {
+                                    corasick.replace_all(text, bind_values.as_slice())
+                                });
                             }
                         }).with_context(|| format!("Error in layer {}.", i)));
                     }
