@@ -32,43 +32,54 @@ fn program() -> Result<(), Error> {
     let tag_directory_paths = gfunc::fnav::rsearch_dir(&program_args.root_directory, master_config.tag_directory, gfunc::fnav::MetaType::Directory)
         .with_context(|| format!("Could not read specified root directory {:?}.", program_args.root_directory))?;
     eprintln!(" >> TAG DIRECTORIES FOUND :: {:#?}", tag_directory_paths);
-    for tag_directory_path in &tag_directory_paths {
-        let specification_root = warn_continue!(TableRoot::from_file_path(
-            tag_directory_path.join(tagfiles::ENTRYPOINT_FILE))
-            .with_context(|| format!("Cannot parse entrypoint file ({}) to toml (in tag directory {:?}).",
-                    tagfiles::ENTRYPOINT_FILE, tag_directory_path)));
-        let specification = tagfiles::TagSpecification::from_table(specification_root.handle())?;
-        for group_name in specification.group_paths {
-            use optwrite::OptWrite;
-            let group_root = warn_continue!(TableRoot::from_file_path(
-                tag_directory_path.join(group_name))
-                .with_context(|| format!("Cannot parse binding group file '{}' to toml (in tag directory {:?}).",
-                    group_name, tag_directory_path)));
-            let group = warn_continue!(tagfiles::TagGroup::from_table(group_root.handle())
-                .context("Error while interpreting binding group."));
-            let group_options = master_config.group_options.clone().overriden_by(group.options);
-            for (i, layer) in group.layers.iter().enumerate() {
-                let (bind_keys, bind_values) = warn_continue!(layer.generate_bindings(
-                    &mut map_registry,
-                    &mut function_registry,
-                    &master_config.meta_options,
-                    &master_config.layer_options)
-                    .with_context(|| format!("Error evaluating layer {} in group '{}' (in tag directory {:?}).", i+1, group_name, tag_directory_path)));
-                let searcher = aho_corasick::AhoCorasick::new(bind_keys);
-
-                //4th layer nested for loop!!1!
-                for file_name in &group.files {
-                    let affecting_file_path = tag_directory_path.parent().unwrap().join(file_name);
-                    let axbind_file_path =
-                        tag_directory_path.parent().unwrap().join(escaped_manip(
-                            group_options.axbind_file_format.unwrap().as_str(),
-                            master_config.meta_options.wildcard_char.unwrap(),
-                            |format| format.replace(
-                                master_config.meta_options.wildcard_char.unwrap(),
-                                file_name)));
-                }
-            }
+    macro_rules! capture_err {
+        ($code:block) => {
+            (|| -> Result<(), Error> {
+                Ok($code)
+            })()
         }
+    }
+    //this is certainly something.
+    for tag_directory_path in &tag_directory_paths {
+        warn_continue!(capture_err!( {
+            let specification_root = TableRoot::from_file_path(
+                tag_directory_path.join(tagfiles::ENTRYPOINT_FILE))
+                .with_context(|| format!("Cannot parse entrypoint file ({}) to toml.", tagfiles::ENTRYPOINT_FILE))?;
+            let specification = tagfiles::TagSpecification::from_table(specification_root.handle())?;
+            for group_name in specification.group_paths {
+                warn_continue!(capture_err!( {
+                    use optwrite::OptWrite;
+                    let group_root = TableRoot::from_file_path(
+                        tag_directory_path.join(group_name))
+                        .context("Cannot parse binding group to toml.")?;
+                    let group = tagfiles::TagGroup::from_table(group_root.handle())
+                        .context("Error while interpreting binding group.")?;
+                    let group_options = master_config.group_options.clone().overriden_by(group.options);
+                    for (i, layer) in group.layers.iter().enumerate() {
+                        warn_continue!(capture_err!( {
+                            let (bind_keys, bind_values) = layer.generate_bindings(
+                                &mut map_registry,
+                                &mut function_registry,
+                                &master_config.meta_options,
+                                &master_config.layer_options)
+                                .context("Error evaluating bindings")?;
+                            let searcher = aho_corasick::AhoCorasick::new(bind_keys)
+                                .context("Error creating 'aho_corasick' object; this is a rare error that should not occur (unless very irregular map keys are specified?), see rust docs for aho_corasick::AhoCorasick::new()")?;
+                            for file_name in &group.files {
+                                let affecting_file_path = tag_directory_path.parent().unwrap().join(file_name);
+                                let axbind_file_path =
+                                    tag_directory_path.parent().unwrap().join(escaped_manip(
+                                        group_options.axbind_file_format.unwrap().as_str(),
+                                        master_config.meta_options.wildcard_char.unwrap(),
+                                        |format| format.replace(
+                                            master_config.meta_options.wildcard_char.unwrap(),
+                                            file_name)));
+                            }
+                        }).with_context(|| format!("Error in layer {}.", i)));
+                    }
+                }).with_context(|| format!("Error in tag group '{}'.", group_name)));
+            }
+        }).with_context(|| format!("Error in tag directory {:?}", tag_directory_path)));
     }
     Ok(())
 }
