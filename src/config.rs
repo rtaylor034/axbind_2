@@ -1,15 +1,5 @@
-use crate:: {
-    extract_value,
-    TableResultOptional,
-    TableGetError,
-    TableHandle,
-    PotentialValueHandle,
-    TableResult,
-    PathBuf,
-    Path,
-    Error,
-    Context,
-    OptWrite,
+use crate::{
+    extract_value, Error, OptWrite, PotentialValueHandle, TableHandle, TableResultOptional,
 };
 #[derive(Clone, Debug)]
 pub struct MasterConfig<'t> {
@@ -41,8 +31,12 @@ impl<'st> MasterConfig<'st> {
             map_directory: extract_value!(String, handle.get("map_directory"))?,
             function_directory: extract_value!(String, handle.get("function_directory"))?,
             tag_directory: extract_value!(String, handle.get("tag_directory"))?,
-            group_options: GroupOptions::from_table_forced(handle.traverse(&["options", "group"])?)?,
-            layer_options: LayerOptions::from_table_forced(handle.traverse(&["options", "layer"])?)?,
+            group_options: GroupOptions::from_table_forced(
+                handle.traverse(&["options", "group"])?,
+            )?,
+            layer_options: LayerOptions::from_table_forced(
+                handle.traverse(&["options", "layer"])?,
+            )?,
             meta_options: MetaOptions::from_table_forced(handle.traverse(&["options", "meta"])?)?,
         })
     }
@@ -55,7 +49,8 @@ impl<'st> GroupOptions<'st> {
     }
     pub fn from_table<'t>(handle: TableHandle<'t>) -> Result<GroupOptions<'t>, Error> {
         Ok(GroupOptions {
-            axbind_file_format: extract_value!(String, handle.get("axbind_file_format")).optional()?,
+            axbind_file_format: extract_value!(String, handle.get("axbind_file_format"))
+                .optional()?,
         })
     }
 }
@@ -93,7 +88,10 @@ fn extract_char(handle: PotentialValueHandle) -> Result<char, Error> {
     let raw = extract_value!(String, handle.clone())?.as_str();
     match raw.len() == 1 {
         true => Ok(raw.chars().next().unwrap()),
-        false => Err(anyhow::anyhow!("value for key '{}' must be exactly 1 character", handle.context)),
+        false => Err(anyhow::anyhow!(
+            "value for key '{}' must be exactly 1 character",
+            handle.context
+        )),
     }
 }
 fn extract_char_optional(handle: PotentialValueHandle) -> Result<Option<char>, Error> {
@@ -103,6 +101,9 @@ fn extract_char_optional(handle: PotentialValueHandle) -> Result<Option<char>, E
     };
     match raw.len() == 1 {
         true => Ok(Some(raw.chars().next().unwrap())),
-        false => Err(anyhow::anyhow!("value for key '{}' must be exactly 1 character", handle.context)),
+        false => Err(anyhow::anyhow!(
+            "value for key '{}' must be exactly 1 character",
+            handle.context
+        )),
     }
 }
