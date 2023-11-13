@@ -3,10 +3,9 @@ use crate::{
     TableResult, TableResultOptional, extract_array_strings,
 };
 use anyhow::Context;
-pub const ENTRYPOINT_FILE: &'static str = "main.toml";
 pub struct TagSpecification<'t> {
     //silly field
-    pub group_paths: Vec<&'t str>,
+    pub group_paths: Option<Vec<&'t str>>,
 }
 pub struct TagGroup<'t> {
     pub files: Vec<&'t String>,
@@ -25,8 +24,7 @@ impl<'st> TagSpecification<'st> {
         Ok(TagSpecification {
             group_paths: extract_array_strings(handle.get("groups"))
                 .optional()?
-                .map(|o| o.iter().map(|v| v.as_str()).collect())
-                .unwrap_or(vec![ENTRYPOINT_FILE]),
+                .map(|o| o.iter().map(|v| v.as_str()).collect()),
         })
     }
 }

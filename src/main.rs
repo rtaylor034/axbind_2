@@ -57,10 +57,10 @@ fn program() -> Result<(), Error> {
     for tag_directory_path in &tag_directory_paths {
         warn_continue!(capture_err!( {
             let specification_root = TableRoot::from_file_path(
-                tag_directory_path.join(tagfiles::ENTRYPOINT_FILE))
-                .with_context(|| format!("Cannot parse entrypoint file \"{}\" to toml (tag directory skipped).", tagfiles::ENTRYPOINT_FILE))?;
+                tag_directory_path.join(master_config.tag_entry_point))
+                .with_context(|| format!("Cannot parse entry point file \"{}\" to toml (tag directory skipped).", master_config.tag_entry_point))?;
             let specification = tagfiles::TagSpecification::from_table(specification_root.handle())?;
-            for group_name in specification.group_paths {
+            for group_name in specification.group_paths.unwrap_or(vec![master_config.tag_entry_point]) {
                 warn_continue!(capture_err!( {
                     use optwrite::OptWrite;
                     let group_root = TableRoot::from_file_path(

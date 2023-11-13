@@ -6,6 +6,7 @@ pub struct MasterConfig<'t> {
     pub map_directory: &'t String,
     pub function_directory: &'t String,
     pub tag_directory: &'t String,
+    pub tag_entry_point: &'t String,
     pub group_options: GroupOptions<'t>,
     pub layer_options: LayerOptions<'t>,
     pub meta_options: MetaOptions<'t>,
@@ -30,6 +31,7 @@ impl<'st> MasterConfig<'st> {
             map_directory: extract_value!(String, handle.get("map_directory"))?,
             function_directory: extract_value!(String, handle.get("function_directory"))?,
             tag_directory: extract_value!(String, handle.get("tag_directory"))?,
+            tag_entry_point: extract_value!(String, handle.get("tag_entry_point"))?,
             group_options: GroupOptions::from_table_forced(
                 handle.traverse(&["options", "group"])?,
             )?,

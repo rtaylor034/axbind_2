@@ -2,6 +2,7 @@
 map_directory = "maps"
 function_directory = "functions"
 tag_directory = "dot_axbind"
+tag_entry_point = "main.toml"
 
 [options.meta]
 escape_sequence = '|'
