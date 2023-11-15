@@ -128,7 +128,7 @@ fn main() {
             exit(1);
         }
         Ok(_) => {
-            eprintln!("[OK]");
+            eprintln!("[OK!]");
             exit(0);
         }
     }
