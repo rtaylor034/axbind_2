@@ -10,7 +10,7 @@ fn program() -> Result<(), Error> {
     let config_parent_path = PathBuf::from(Path::new(master_root.context.branch.as_ref()).parent().unwrap());
     let master_config = config::MasterConfig::from_table(master_root.handle())
         .context("Error interpreting config file.")?;
-    eprintln!(" >> MASTER CONFIG :: {:#?}", master_config);
+    //eprintln!(" >> MASTER CONFIG :: {:#?}", master_config);
     macro_rules! get_registry_roots {
         ($name:expr, $path:expr) => {
             gfunc::fnav::rsearch_dir_pred(config_parent_path.join($path), |file_path| file_path.is_file())
@@ -34,8 +34,8 @@ fn program() -> Result<(), Error> {
     let mut function_registry = registry::Registry::<registry::BindFunction>::from_handles(
         function_roots.iter().map(|root| root.handle()),
     );
-    eprintln!(" >> MAP REGISTRY :: {:#?}", map_registry);
-    eprintln!(" >> FUNCTION REGISTRY :: {:#?}", function_registry);
+    //eprintln!(" >> MAP REGISTRY :: {:#?}", map_registry);
+    //eprintln!(" >> FUNCTION REGISTRY :: {:#?}", function_registry);
     let tag_directory_paths = gfunc::fnav::rsearch_dir(
         &program_args.root_directory,
         master_config.tag_directory,
@@ -47,7 +47,7 @@ fn program() -> Result<(), Error> {
             program_args.root_directory
         )
     })?;
-    eprintln!(" >> TAG DIRECTORIES FOUND :: {:#?}", tag_directory_paths);
+    //eprintln!(" >> TAG DIRECTORIES FOUND :: {:#?}", tag_directory_paths);
     macro_rules! capture_err {
         ($code:block) => {
             (|| -> Result<(), Error> { Ok($code) })()
@@ -121,10 +121,15 @@ fn program() -> Result<(), Error> {
 }
 
 fn main() {
+    use std::process::exit;
     match program() {
         Err(e) => {
             display_err!("[FATAL!]", e);
+            exit(1);
         }
-        Ok(_) => eprintln!(" >> OK <<"),
+        Ok(_) => {
+            eprintln!("[OK]");
+            exit(0);
+        }
     }
 }
