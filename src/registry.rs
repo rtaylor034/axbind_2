@@ -145,7 +145,8 @@ impl BindFunction<'_> {
         let command = escaped_manip(self.command, meta_options.escape_sequence.unwrap(), |text| {
             text.replace(meta_options.wildcard_char.unwrap(), key)
         });
-        Ok(std::str::from_utf8(
+        //eprintln!(" >> RUNNING COMMAND :: {}", command);
+        let o = std::str::from_utf8(
             Command::new(self.shell)
                 //awkward assumption of '-c'; dont want to make user specify this for every function(?)
                 .arg("-c")
@@ -154,6 +155,8 @@ impl BindFunction<'_> {
                 .stdout
                 .as_slice(),
         )?
-        .to_owned())
+        .to_owned();
+        //eprintln!(" GOT >> :: {}", o);
+        Ok(o)
     }
 }
