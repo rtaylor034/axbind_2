@@ -1,9 +1,8 @@
 # AxBind
 
-> Configuration management for the indecicive.
+> Dotfile management for the indecicive.
 
 ## Description
 
-At it's core, AxBind is simply a text-replacement program.
-
+AxBind is text-replacement program specialized for aiding the user in setting universal key-bindings (among other things) across dotfiles.
 
