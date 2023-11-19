@@ -2,9 +2,9 @@
 
 > Dotfile management for the indecisive.
 
-### Install
+### Note
 
-*Eventually will have binary/package posted, but as of right now `axbind` must be built from source.*
+*I will eventually will have binary/package posted, but as of right now `axbind` must be built from source.*
 
 ## Description
 
