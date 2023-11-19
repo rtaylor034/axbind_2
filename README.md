@@ -1,6 +1,6 @@
 # AxBind
 
-Configuration management for the indecicive.
+> Configuration management for the indecicive.
 
 ## Description
 
