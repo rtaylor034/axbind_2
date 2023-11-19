@@ -1,2 +1,9 @@
-AxBind is a program that seeks to aid in setting and changing universal key-bindings (among other things) for the indecicive.
+# AxBind
+
+Configuration management for the indecicive.
+
+## Description
+
+At it's core, AxBind is simply a text-replacement program.
+
 
