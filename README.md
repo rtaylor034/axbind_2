@@ -8,10 +8,12 @@
 
 ## Description
 
-`axbind` is program intended to automate the task of editing multiple dotfiles when making a single abstract change to keybindings/colors/etc.. `axbind` may be especially useful for users with alternate keyboard layouts or highly personalized configs.
+AxBind is program intended to automate the task of editing multiple dotfiles when making a single abstract change to keybindings/colors/etc.
 
-### Overview 
-- Set mappings (key-value pairs) that are applied to all files of a directory.
-- Control how mappings behave for any specific file they affect via remapping or functions.
-- 
+AxBind adresses a relatively specific issue, and may not be useful to all users.
+Those that may find AxBind useful include:
+- Users that wish to have the same universal keybinds across programs.
+- Users that wish to have the same custom universal colors/theme across programs.
+- Users with highly modified configurations.
+- Users that use alternative keyboard layouts.
 ## Getting Started
