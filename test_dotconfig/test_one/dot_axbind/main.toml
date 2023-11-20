@@ -1,6 +1,0 @@
-#Groups should not contain duplicate 'files' elements
-#If they do, the last group will overwrite previous groups.
-groups = [
-    'first.toml',
-    'second.toml'
-]

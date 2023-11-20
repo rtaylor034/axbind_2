@@ -10,11 +10,20 @@
 
 `axbind` is program intended to automate the task of editing multiple dotfiles when making a single abstract change to keybindings/colors/etc.
 
-`axbind` adresses a relatively specific issue, and may not be useful to all users.
 
-#### Those that may find `axbind` useful include:
-- Users that wish to have the same universal keybinds across programs.
-- Users that wish to have the same custom universal colors/theme across programs.
-- Users with highly modified configurations.
-- Users that use alternative keyboard layouts.
 ## Getting Started
+
+Download the contents of the [example config directory] and place them under "axbind" in your main configs directory (ex: ~/.config/axbind).
+
+*These provide reasonable defaults for all interpreted values.*
+
+`axbind` by default will check these paths in order for a master config file when run:
+1. `$XDG_CONFIG_HOME/axbind/config.toml`
+2. `$HOME/.config/axbind/config.toml`
+3. `/etc/axbind/config.toml`
+*This behavior can be overriden by specifying `--config=<path>` with the `axbind` command.*
+
+All `axbind` configuration files are parsed as [toml].
+
+
+
