@@ -21,6 +21,7 @@ Download the contents of the [example config directory] and place them under "ax
 1. `$XDG_CONFIG_HOME/axbind/config.toml`
 2. `$HOME/.config/axbind/config.toml`
 3. `/etc/axbind/config.toml`
+
 *This behavior can be overriden by specifying `--config=<path>` with the `axbind` command.*
 
 All `axbind` configuration files are parsed as [toml].
