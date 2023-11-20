@@ -12,7 +12,7 @@
 
 `axbind` adresses a relatively specific issue, and may not be useful to all users.
 
-Those that may find `axbind` useful include:
+#### Those that may find `axbind` useful include:
 - Users that wish to have the same universal keybinds across programs.
 - Users that wish to have the same custom universal colors/theme across programs.
 - Users with highly modified configurations.
