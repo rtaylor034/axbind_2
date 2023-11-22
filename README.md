@@ -10,15 +10,15 @@
 
 AxBind is program intended to automate the task of editing multiple dotfiles when making a single abstract change to keybindings/colors/etc.
 
-This is achieved through user-defined maps of key-value pairs that are "applied" to all/specified text files of a directory (ex: ~/.config).
+This is achieved through user-defined mappings that are applied to all/specified text files of a directory (ex: ~/.config).
 
-Beyond basic key-value replacement, mapping behavior can further be manipulated per-file (i.e. remapping, text functions, layering multiple maps, etc.).
+Beyond basic key-value replacement, mapping behavior can be further controlled per-file (i.e. remapping, text functions, layering multiple maps, etc.).
 
 AxBind is written in Rust and all configuration files of AxBind use [toml] syntax.
 
 # Documentation
 
-For quickly getting started, an [example configuraton] is provided with sensible defaults and guiding comments.
+For quickly getting started, an [example configuraton] is provided with reasonable defaults and guiding comments.
 
 ## Master Config File
 
@@ -149,7 +149,10 @@ command = 'echo -n "This used to be ^"'
 
 ## Tag Entry Point
 
-The entry point file of an axbind tag directory
+AxBind expects a [Tag Entry Point] to be present in every [tag directory] and reads it first.
+
+*Currently, [Tag Entry Points] only exist to specify [Tag Groups], if any.*
+
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
@@ -160,7 +163,7 @@ The entry point file of an axbind tag directory
 #### Example:
 
 ```toml
-# ~/.config/lf/.axbind
+# ~/.config/lf/.axbind/main.toml
 groups = [
   'colors.toml'
   'keybindings.toml'
@@ -169,6 +172,46 @@ groups = [
 
 ## Tag Group
 
+Tells AxBind which files to apply [Layers] to and how.
+
+#### Checked Keys:
+| Key | Type | Description |
+|:----|:-----|:------------|
+| `files` | String[] | . |
+| `options` | [GroupOptions] | . |
+| `layers` | [Layer][] | . |
+
+#### Example:
+```toml
+# ~/.config/lf/.axbind/keybindings.toml
+files = [
+  'lfrc'
+]
+options.axbind_file_format = '^.myExtension'
+[[layers]]
+map = 'myKeybindings'
+remaps = [ 'myLfRemaps' ]
+```
+
+## Layer
+
+Represents a 'pass' of AxBind.
+
+#### Checked Keys:
+| Key | Type | Description |
+|:----|:-----|:------------|
+| `map` | String | . |
+| `remaps` | String[] | . |
+| `functions` | String[] | . |
+| `options` | [LayerOptions][] [?] | . |
+
+#### Example:
+```toml
+#<...>
+map = 'myKeybindings'
+remaps = [ 'myLfRemaps' ]
+#<...>
+```
 
 ## Meta Options
 
