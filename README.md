@@ -18,17 +18,18 @@ AxBind is written in Rust and all configuration files of AxBind use [toml] synta
 
 ## Master Config
 
-By default, AxBind will check these paths (in order) for a `master config` file when run:
+By default, AxBind will check these paths (in order) for a [Master Config] when run:
 1. `$XDG_CONFIG_HOME/axbind/config.toml`
 2. `$HOME/.config/axbind/config.toml`
 3. `/etc/axbind/config.toml`
 
 *This behavior can be overriden by specifying `--config=<path>` with the `axbind` command.*
 
-#### Required Values
+#### Checked Keys
 | Name | Type | Description |
 |------|------|-------------|
 | `map_directory` | String | . |
 | `function_directory` | String | . |
 | `tag_directory` | String | . |
-
+| `tag_entry_point` | String | . |
+| `options` | [Option Defaults] | . |
