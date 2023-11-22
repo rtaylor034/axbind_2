@@ -27,6 +27,7 @@ By default, AxBind will check these paths (in order) for a `master config` file 
 
 #### Required Values
 | Name | Type | Description |
+|------|------|-------------|
 | `map_directory` | String | . |
 | `function_directory` | String | . |
 | `tag_directory` | String | . |
