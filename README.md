@@ -60,6 +60,11 @@ escape_sequence = '|'
 key_format = '@^@'
 ```
 
+### Map/Function Directory
+
+### Tag Directory
+
+
 ## Map File
 
 Represents a [Mapping] and its name.
@@ -144,12 +149,26 @@ command = 'echo -n "This used to be ^"'
 
 ## Tag Entry Point
 
+The entry point file of an axbind tag directory
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
 | `groups`* | String[] [?] | . |
 
-\*If unspecified, will treat the [Tag Entry Point] file itself as a [Tag Group] (and assume it is the only one), and will read it as such.
+\*If unspecified, AxBind will treat the [Tag Entry Point] file itself as a [Tag Group] (and assume it is the only one), and will read it as such.
+
+#### Example:
+
+```toml
+# ~/.config/lf/.axbind
+groups = [
+  'colors.toml'
+  'keybindings.toml'
+]
+```
+
+## Tag Group
+
 
 ## Meta Options
 
