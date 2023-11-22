@@ -16,7 +16,7 @@ Beyond basic key-value replacement, mapping behavior can further be manipulated 
 
 AxBind is written in Rust and all configuration files of AxBind use [toml] syntax.
 
-## Usage / Documentation
+## Documentation
 
 For quickly getting started, an [example configuraton] is provided with sensible defaults and guiding comments.
 
@@ -39,4 +39,13 @@ This behavior can be overriden by specifying `--config=<path>` with the `axbind`
 | `options.meta` | [Meta Options] | . |
 | `options.group` | [Group Options] | . |
 | `options.layer` | [Group Options] | . |
-7
+
+### Meta Options
+
+These options relate to how AxBind reads its own configuration files.
+
+#### Checked Keys:
+| Key | Type | Description |
+|:----|:-----|:------------|
+| `escape_sequence` | String | . |
+| `wildcard_character` | Single Character | . |
