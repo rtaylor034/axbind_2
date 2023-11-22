@@ -16,11 +16,11 @@ Beyond basic key-value replacement, mapping behavior can further be manipulated 
 
 AxBind is written in Rust and all configuration files of AxBind use [toml] syntax.
 
-## Documentation
+# Documentation
 
 For quickly getting started, an [example configuraton] is provided with sensible defaults and guiding comments.
 
-### Master Config File
+## Master Config File
 
 By default, AxBind will check these paths (in order) for a [Master Config File]:
 1. `$XDG_CONFIG_HOME/axbind/config.toml`
@@ -42,7 +42,7 @@ This behavior can be overriden by specifying `--config=<path>` with the `axbind`
 
 #### Example:
 ```toml
-# config.toml
+# .../config.toml
 map_directory = 'maps'
 function_directory = 'functions'
 tag_directory = '.axbind'
@@ -60,9 +60,9 @@ escape_sequence = '|'
 key_format = '@^@'
 ```
 
-### Map File
+## Map File
 
-Represents a user-specified key-value mapping.
+Represents a [Mapping] and its name.
 
 *AxBind will ignore files within the map directory that are not valid toml, or do not contain an `axbind_map` key.*
 
@@ -74,13 +74,54 @@ Represents a user-specified key-value mapping.
 
 #### Example:
 ```toml
+# .../maps/myMap.toml
 axbind_map = 'myMap'
 [map]
-foo = 'bar'
-baz = 'qux'
+foo = 'myFooReplacement'
+bar = 'myBarReplacement'
 ```
 
-### Meta Options
+## Mapping
+
+Represents a user-specified mapping of key-value pairs.
+
+*The important part of a [Map File].*
+
+#### Checked Keys:
+| Key | Type | Description |
+|:----|:-----|:------------|
+| \<any> | String | . |
+| `@INCLUDE` | Array<String> | . |
+
+#### Example
+```toml
+#<...>
+foo = 'myFooReplacement'
+bar = 'myBarReplacement'
+#<...>
+```
+
+## Function File
+
+Represents a [Function] and its name.
+
+*AxBind will ignore files within the function directory that are not valid toml, or do not contain an `axbind_function` key.*
+
+#### Checked Keys:
+| Key | Type | Description |
+|:----|:-----|:------------|
+| `axbind_function` | String | . |
+| `function` | [Function] | . |
+
+#### Example:
+```toml
+# .../functions/myFunction.toml
+axbind_map = 'myFunction'
+[function]
+shell = 'sh'
+command = 'echo -n "This used to be ^"'
+```
+## Meta Options
 
 These options relate to how AxBind reads its own configuration files.
 
@@ -94,8 +135,8 @@ These options relate to how AxBind reads its own configuration files.
 
 #### Example:
 ```toml
-#...
+#<...>
 escape_sequence = '|'
 wildcard_char = '^'
-#...
+#<...>
 ```
