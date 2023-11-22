@@ -86,7 +86,7 @@ foo = 'myFooReplacement'
 bar = 'myBarReplacement'
 ```
 
-## Mapping
+## Map
 
 Represents a user-specified mapping of key-value pairs.
 
