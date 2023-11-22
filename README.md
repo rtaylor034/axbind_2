@@ -67,7 +67,7 @@ key_format = '@^@'
 
 ## Map File
 
-Represents a [Mapping] and its name.
+Represents a [Mapping] and it's identifier.
 
 *AxBind will ignore files within the map directory that are not valid toml, or do not contain an `axbind_map` key.*
 
@@ -108,7 +108,7 @@ bar = 'myBarReplacement'
 
 ## Function File
 
-Represents a [Function] and its name.
+Represents a [Function] and it's identifier.
 
 *AxBind will ignore files within the function directory that are not valid toml, or do not contain an `axbind_function` key.*
 
