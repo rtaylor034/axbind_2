@@ -74,7 +74,7 @@ Represents a [Mapping] and its name.
 
 #### Example:
 ```toml
-# .../maps/myMap.toml
+# ~/.config/axbind/maps/myMap.toml
 axbind_map = 'myMap'
 [map]
 foo = 'myFooReplacement'
@@ -91,7 +91,7 @@ Represents a user-specified mapping of key-value pairs.
 | Key | Type | Description |
 |:----|:-----|:------------|
 | \<any> | String | . |
-| `@INCLUDE` | Array<String> | . |
+| `@INCLUDE` | String[] [?] | . |
 
 #### Example
 ```toml
@@ -115,12 +115,42 @@ Represents a [Function] and its name.
 
 #### Example:
 ```toml
-# .../functions/myFunction.toml
+# ~/.config/axbind/functions/myFunction.toml
 axbind_map = 'myFunction'
 [function]
 shell = 'sh'
 command = 'echo -n "This used to be ^"'
 ```
+
+## Function
+
+Represents a user-specified string-to-string function.
+
+*The important part of a [Function File].*
+
+#### Checked Keys:
+| Key | Type | Description |
+|:----|:-----|:------------|
+| `shell` | String | . |
+| `command` | String | . |
+
+#### Example
+```toml
+#<...>
+shell = 'sh'
+command = 'echo -n "This used to be ^"'
+#<...>
+```
+
+## Tag Entry Point
+
+#### Checked Keys:
+| Key | Type | Description |
+|:----|:-----|:------------|
+| `groups`* | String[] [?] | . |
+
+\*If unspecified, will treat the [Tag Entry Point] file itself as a [Tag Group] (and assume it is the only one), and will read it as such.
+
 ## Meta Options
 
 These options relate to how AxBind reads its own configuration files.
@@ -128,10 +158,8 @@ These options relate to how AxBind reads its own configuration files.
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| *`escape_sequence` | String | . |
-| *`wildcard_character` | Single Character | . |
-
-\* *Optional unless specified in [Master Config File].*
+| `escape_sequence`[^opt] | String | . |
+| *`wildcard_character`[^opt] | Single Character | . |
 
 #### Example:
 ```toml
