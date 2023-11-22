@@ -9,8 +9,11 @@
 ## Description
 
 `axbind` is program intended to automate the task of editing multiple dotfiles when making a single abstract change to keybindings/colors/etc.
+
 This is achieved through user-defined maps of key-value pairs that are "applied" to all/specified text files of a directory (i.e. `~/.config`).
-Beyond basic key-value replacement, mapping behavior can further be manipulated per-file (i.e. remapping, text functions, layering multiple maps, etc.)
+
+Beyond basic key-value replacement, mapping behavior can further be manipulated per-file (i.e. remapping, text functions, layering multiple maps, etc.).
+
 `axbind` is written in Rust and all configuration files of `axbind` use [toml] syntax.
 
 ## Getting Started
