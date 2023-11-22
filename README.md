@@ -16,20 +16,27 @@ Beyond basic key-value replacement, mapping behavior can further be manipulated 
 
 AxBind is written in Rust and all configuration files of AxBind use [toml] syntax.
 
-## Master Config
+## Usage / Documentation
 
-By default, AxBind will check these paths (in order) for a [Master Config] when run:
+For quickly getting started, an [example configuraton] is provided with sensible defaults and guiding comments.
+
+### Master Config
+
+By default, AxBind will check these paths (in order) for a [Master Config]:
 1. `$XDG_CONFIG_HOME/axbind/config.toml`
 2. `$HOME/.config/axbind/config.toml`
 3. `/etc/axbind/config.toml`
 
-*This behavior can be overriden by specifying `--config=<path>` with the `axbind` command.*
+This behavior can be overriden by specifying `--config=<path>` with the `axbind` command.
 
-#### Checked Keys
-| Name | Type | Description |
-|------|------|-------------|
+#### Checked Keys:
+| Key | Type | Description |
+|:----|:-----|:------------|
 | `map_directory` | String | . |
 | `function_directory` | String | . |
 | `tag_directory` | String | . |
 | `tag_entry_point` | String | . |
-| `options` | [Option Defaults] | . |
+| `options.meta` | [Meta Options] | . |
+| `options.group` | [Group Options] | . |
+| `options.layer` | [Group Options] | . |
+7
