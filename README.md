@@ -279,7 +279,7 @@ escape_sequence = '|'
 6 @fo|Ao@
 se|c|ret| me|ssa|ge
 ```
-> Yields this output:
+> Yields the following:
 ```
 1 BAR
 2 @foo@
