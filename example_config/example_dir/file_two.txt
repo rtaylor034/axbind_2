@@ -1,0 +1,10 @@
+1. (qux)
+2. (qux)
+3. (qux)
+4. ^bar
+5. ^baz
+6. ^qux
+7. @^bar@
+8. @(qux)@
+9. (QUX) (QUX) (QUX) 
+10. ~^baz~

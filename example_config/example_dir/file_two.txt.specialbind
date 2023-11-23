@@ -1,0 +1,10 @@
+1. @foo@
+2. @bar@
+3. @baz@
+4. ~foo~
+5. ~bar~
+6. ~baz~
+7. @~foo~@
+8. @@foo@@
+9. @FOO@ @BAR@ @BAZ@ 
+10. ~~bar~~
