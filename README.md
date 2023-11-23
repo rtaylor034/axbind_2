@@ -18,7 +18,21 @@ AxBind is written in Rust and all configuration files of AxBind use [toml] synta
 
 # Documentation
 
-For quickly getting started, an [example configuraton] is provided with reasonable defaults and guiding comments.
+**For quickly getting started, an [example configuraton] is provided with reasonable defaults and guiding comments.**
+
+### About The Docs
+
+The following sections describe the types of AxBind configuration files in a sensible order.
+
+Becuase all configuration files are just [toml] tables, they can be described with their expected keys as shown:
+
+| Key | Type | Description |
+|:----|:-----|:------------|
+| `example_key` | Example [?] | Description of what the value for this key represents. |
+
+If the 'Type' is marked with a [?] as shown above, specifying the key-value pair is optional.
+
+All other key-value pairs are required to be specified, and AxBind will panic or skip the file (depending on the file) if they are not.
 
 ## Master Config File
 
@@ -147,18 +161,18 @@ command = 'echo -n "This used to be ^"'
 #<...>
 ```
 
-## Tag Entry Point
+## Tag Entry Point File
 
-AxBind expects a [Tag Entry Point] to be present in every [tag directory] and reads it first.
+AxBind expects a [Tag Entry Point File] to be present in every [tag directory] and reads it first.
 
-*Currently, [Tag Entry Points] only exist to specify [Tag Groups], if any.*
+*Currently, [Tag Entry Point Files] only exist to specify [Tag Group Files], if any.*
 
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
 | `groups`* | String[] [?] | . |
 
-\*If unspecified, AxBind will treat the [Tag Entry Point] file itself as a [Tag Group] (and assume it is the only one), and will read it as such.
+\*If unspecified, AxBind will treat the [Tag Entry Point File] file itself as a [Tag Group File] (and assume it is the only one), and will read it as such.
 
 #### Example:
 
@@ -170,7 +184,7 @@ groups = [
 ]
 ```
 
-## Tag Group
+## Tag Group File
 
 Tells AxBind which files to apply specified [Layers] to.
 
@@ -178,7 +192,7 @@ Tells AxBind which files to apply specified [Layers] to.
 | Key | Type | Description |
 |:----|:-----|:------------|
 | `files` | String[] | . |
-| `options` | [GroupOptions] | . |
+| `options` | [Group Options] [?] | . |
 | `layers` | [Layer][] | . |
 
 #### Example:
@@ -204,7 +218,7 @@ Represents a specification for AxBind mapping.
 | `map` | String | . |
 | `remaps` | String[] | . |
 | `functions` | String[] | . |
-| `options` | [LayerOptions][] [?] | . |
+| `options` | [Layer Options][] [?] | . |
 
 #### Example:
 ```toml
@@ -222,8 +236,8 @@ Options relating to how AxBind reads its own configuration files.
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `escape_sequence`[^opt] | String | . |
-| *`wildcard_character`[^opt] | Single Character | . |
+| `escape_sequence` | String [?] | . |
+| *`wildcard_character` | Single Character [?] | . |
 
 #### Example:
 ```toml
@@ -240,7 +254,7 @@ Options relating to [TagGroup] specifications.
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `axbind_file_format`[^opt] | [KeyString] | . |
+| `axbind_file_format` | [KeyString] [?] | . |
 
 #### Example:
 ```toml
@@ -256,12 +270,14 @@ Options relating to how [Layers] behave.
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `escape_sequence`[^opt] | String | . |
-| `key_format`[^opt] | [KeyString] | . |
+| `escape_sequence` | String [?] | . |
+| `key_format` | [KeyString] [?] | . |
 
 #### Example:
 ```toml
 #<...>
-axbind_file_format = '^.myCustomExtension'
+options.key_format = '%^%'
 #<...>
 ```
+
+[^opt]: Optional unless specified in [Master Config File].
