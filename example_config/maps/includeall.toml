@@ -1,0 +1,10 @@
+# The identifier/name of this map
+axbind_map = 'includeall'
+
+[map]
+'@INCLUDE' = [
+    'foo2bar',
+    'bar2baz',
+    'baz2qux',
+]
+secret = 'message'

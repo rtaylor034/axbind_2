@@ -1,0 +1,6 @@
+# The identifier/name of this function
+axbind_function = 'parenthesis'
+
+[function]
+shell = 'sh'
+command = 'echo -n "(^)"'

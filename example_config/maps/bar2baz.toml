@@ -1,0 +1,6 @@
+# The identifier/name of this map
+axbind_map = 'bar2baz'
+
+[map]
+bar = 'baz'
+BAR = 'BAZ'

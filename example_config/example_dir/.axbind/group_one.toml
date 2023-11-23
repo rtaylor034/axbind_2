@@ -1,0 +1,15 @@
+files = [
+    'file_one.txt'
+]
+
+# layers are applied one-after-another, reading the changes made by previous layers
+[[layers]]
+map = 'foo2bar'
+options.key_format = '1^1'
+options.escape_sequence = '|'
+[[layers]]
+map = 'bar2baz'
+options.key_format = '2^2'
+[[layers]]
+map = 'baz2qux'
+options.key_format = '3^3'

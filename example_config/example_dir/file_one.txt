@@ -1,0 +1,21 @@
+1. bar
+2. baz
+3. qux
+4. 2foo2 3foo3
+5. QUXBAZ
+# layers applied one-after-another, so 'stacking' keys is possible.
+6. baz
+# escape sequence ('' in layer 1) tells AxBind to skip the very next character while searching for keys
+7. 1foo1
+8. 1foo1
+# keys will be still interrupted by rogue escaped characters that occur inside of the key itself.
+8. 1fo?o1
+9. ||||
+# Escape sequence is cleared after 1st layer pass, so (10) and (11) keys are recognized
+10. baz
+11. qux
+12. non-key-text
+13. QUX
+14. foo
+15. bar
+16. baz

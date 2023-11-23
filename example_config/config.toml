@@ -1,0 +1,24 @@
+# paths are relative to this file's directory
+# patterns such as '/../' or '~/' are not supported
+map_directory = 'maps'
+function_directory = 'functions'
+
+tag_directory = '.axbind'
+tag_entry_point = 'main.toml'
+
+# OPTION DEFAULTS
+
+#Meta Options
+# *at the moment, 'meta' options are only defined in master config file (this file)
+[options.meta]
+wildcard_char = '^'
+escape_sequence = '|'
+
+#Tag Group Options
+[options.group]
+axbind_file_format = '^.axbind'
+
+#Layer Options
+[options.layer]
+key_format = '@^@'
+escape_sequence = '@DISABLED'

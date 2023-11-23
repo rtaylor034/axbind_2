@@ -1,0 +1,4 @@
+# Runs the example configuration on the provided example directory.
+# (Assuming the axbind executable is in your $PATH)
+axbind ./example_dir --config='./config.toml'
+

@@ -64,7 +64,7 @@ tag_entry_point = 'main.toml'
 
 [options.meta]
 escape_sequence = '|'
-wildcard_character = '^'
+wildcard_char = '^'
 
 [options.group]
 axbind_file_format = '^.axbind'
@@ -232,7 +232,7 @@ Options relating to how AxBind reads its own configuration files.
 | Key | Type | Description |
 |:----|:-----|:------------|
 | `escape_sequence` | String [?] | . |
-| `wildcard_character` | Single Character [?] | . |
+| `wildcard_char` | Single Character [?] | . |
 
 #### Example:
 ```toml
@@ -244,9 +244,9 @@ wildcard_char = '^'
 
 ### Key String
 
-A String that replaces the any instance of the current `wildcard_character` with another value when evaluated.
+A String that replaces the any instance of the current `wildcard_char` with another value when evaluated.
 
-`wildcard_character` instances can be [escaped].
+`wildcard_char` instances can be [escaped].
 
 ### Escape Sequence
 
