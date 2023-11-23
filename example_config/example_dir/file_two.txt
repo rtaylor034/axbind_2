@@ -7,4 +7,4 @@
 7. @^bar@
 8. @(qux)@
 9. (QUX) (QUX) (QUX) 
-10. ~^baz~
+10. ^message
