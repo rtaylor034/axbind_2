@@ -22,7 +22,7 @@ AxBind is written in Rust and all configuration files of AxBind use [toml] synta
 
 ### About The Docs
 
-The following sections describe the types of AxBind configuration files in a sensible order.
+The following sections describe AxBind configuration files/types in a sensible order.
 
 Becuase all configuration files are just [toml] tables, they can be described with their expected keys as shown:
 
@@ -73,11 +73,6 @@ axbind_file_format = '^.axbind'
 escape_sequence = '|'
 key_format = '@^@'
 ```
-
-### Map/Function Directory
-
-### Tag Directory
-
 
 ## Map File
 
@@ -237,7 +232,7 @@ Options relating to how AxBind reads its own configuration files.
 | Key | Type | Description |
 |:----|:-----|:------------|
 | `escape_sequence` | String [?] | . |
-| *`wildcard_character` | Single Character [?] | . |
+| `wildcard_character` | Single Character [?] | . |
 
 #### Example:
 ```toml
@@ -247,14 +242,40 @@ wildcard_char = '^'
 #<...>
 ```
 
+### Key String
+
+A [Key String] is a String that replaces the any instance of the current `wildcard_character` with another value when evaluated.
+
+### Escape Sequence
+
+When AxBind encounters an escape sequence while evaluating text, it will treat the very next character as a non-special character (regardless of if it is or not), and remove the escape sequece from the evaluated output.
+
+#### Example:
+```toml
+# Assume these are the current [Meta Options]
+wildcard_char = '^'
+escape_sequence = '|'
+
+# using [Group Options].axbind_file_format as an example.
+
+axbind_file_format = '^.axbind'
+# evaluates to '<file name>.axbind'
+
+axbind_file_format = '|^^'
+# evaluates to '^<file name>'
+
+axbind_file_format = '||^.ax|bind||'
+# evaluates to '|<file name>.axbind|'
+```
+
 ## Group Options
 
-Options relating to [TagGroup] specifications.
+Options relating to [Tag Group] specifications.
 
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `axbind_file_format` | [KeyString] [?] | . |
+| `axbind_file_format` | [Key String] [?] | . |
 
 #### Example:
 ```toml
@@ -271,7 +292,7 @@ Options relating to how [Layers] behave.
 | Key | Type | Description |
 |:----|:-----|:------------|
 | `escape_sequence` | String [?] | . |
-| `key_format` | [KeyString] [?] | . |
+| `key_format` | [Key String] [?] | . |
 
 #### Example:
 ```toml
@@ -280,4 +301,5 @@ options.key_format = '%^%'
 #<...>
 ```
 
-[^opt]: Optional unless specified in [Master Config File].
+
+### Key String
