@@ -271,22 +271,22 @@ escape_sequence = '|'
 ```
 > To this text:
 ```
-@foo@
-|@foo@
-@foo@|
-@f|oo@
-||@foo@
-@fo|Ao@
+1 @foo@
+2 |@foo@
+3 @foo@|
+4 @f|oo@
+5 ||@foo@
+6 @fo|Ao@
 se|c|ret| me|ssa|ge
 ```
 > Yields this output:
 ```
-BAR
-@foo@
-BAR
-@foo@
-|@foo@
-@foAo@
+1 BAR
+2 @foo@
+3 BAR
+4 @foo@
+5 |BAR
+6 @foAo@
 secret message
 ```
 
