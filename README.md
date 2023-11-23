@@ -67,7 +67,7 @@ key_format = '@^@'
 
 ## Map File
 
-Represents a [Mapping] and it's identifier.
+Represents a [Mapping] and its identifier.
 
 *AxBind will ignore files within the map directory that are not valid toml, or do not contain an `axbind_map` key.*
 
@@ -108,7 +108,7 @@ bar = 'myBarReplacement'
 
 ## Function File
 
-Represents a [Function] and it's identifier.
+Represents a [Function] and its identifier.
 
 *AxBind will ignore files within the function directory that are not valid toml, or do not contain an `axbind_function` key.*
 
@@ -137,7 +137,7 @@ Represents a user-specified string-to-string function.
 | Key | Type | Description |
 |:----|:-----|:------------|
 | `shell` | String | . |
-| `command` | String | . |
+| `command` | [KeyString] | . |
 
 #### Example
 ```toml
@@ -172,7 +172,7 @@ groups = [
 
 ## Tag Group
 
-Tells AxBind which files to apply [Layers] to and how.
+Tells AxBind which files to apply specified [Layers] to.
 
 #### Checked Keys:
 | Key | Type | Description |
@@ -187,15 +187,16 @@ Tells AxBind which files to apply [Layers] to and how.
 files = [
   'lfrc'
 ]
-options.axbind_file_format = '^.myExtension'
+options.axbind_file_format = '^.myCustomExtension'
 [[layers]]
 map = 'myKeybindings'
 remaps = [ 'myLfRemaps' ]
+options.key_format = '%^%'
 ```
 
 ## Layer
 
-Represents a 'pass' of AxBind.
+Represents a specification for AxBind mapping.
 
 #### Checked Keys:
 | Key | Type | Description |
@@ -210,12 +211,13 @@ Represents a 'pass' of AxBind.
 #<...>
 map = 'myKeybindings'
 remaps = [ 'myLfRemaps' ]
+options.key_format = '%^%'
 #<...>
 ```
 
 ## Meta Options
 
-These options relate to how AxBind reads its own configuration files.
+Options relating to how AxBind reads its own configuration files.
 
 #### Checked Keys:
 | Key | Type | Description |
@@ -228,5 +230,38 @@ These options relate to how AxBind reads its own configuration files.
 #<...>
 escape_sequence = '|'
 wildcard_char = '^'
+#<...>
+```
+
+## Group Options
+
+Options relating to [TagGroup] specifications.
+
+#### Checked Keys:
+| Key | Type | Description |
+|:----|:-----|:------------|
+| `axbind_file_format`[^opt] | [KeyString] | . |
+
+#### Example:
+```toml
+#<...>
+axbind_file_format = '^.myCustomExtension'
+#<...>
+```
+
+## Layer Options
+
+Options relating to how [Layers] behave.
+
+#### Checked Keys:
+| Key | Type | Description |
+|:----|:-----|:------------|
+| `escape_sequence`[^opt] | String | . |
+| `key_format`[^opt] | [KeyString] | . |
+
+#### Example:
+```toml
+#<...>
+axbind_file_format = '^.myCustomExtension'
 #<...>
 ```
