@@ -244,28 +244,50 @@ wildcard_char = '^'
 
 ### Key String
 
-A [Key String] is a String that replaces the any instance of the current `wildcard_character` with another value when evaluated.
+A String that replaces the any instance of the current `wildcard_character` with another value when evaluated.
+
+`wildcard_character` instances can be [escaped].
 
 ### Escape Sequence
 
-When AxBind encounters an escape sequence while evaluating text, it will treat the very next character as a non-special character (regardless of if it is or not), and remove the escape sequece from the evaluated output.
+A character sequence that tells AxBind to treat the character directly after the sequence as a non-special character (regardless of if it is or not) when evaluating text.
+
+*(I.e. allows for instances of wildcard characters or map keys to exist in evaluated outputs.)*
+
+Escape sequences are removed from the evaluated output unless they themselves are escaped.
 
 #### Example:
+> Given this [Map File]:
 ```toml
-# Assume these are the current [Meta Options]
-wildcard_char = '^'
+axbind_map = 'foobar'
+[map]
+foo = 'BAR'
+```
+> Applying this [Layer]:
+```toml
+map = 'foobar'
+key_format = '@^@'
 escape_sequence = '|'
-
-# using [Group Options].axbind_file_format as an example.
-
-axbind_file_format = '^.axbind'
-# evaluates to '<file name>.axbind'
-
-axbind_file_format = '|^^'
-# evaluates to '^<file name>'
-
-axbind_file_format = '||^.ax|bind||'
-# evaluates to '|<file name>.axbind|'
+```
+> To this text:
+```
+@foo@
+|@foo@
+@foo@|
+@f|oo@
+||@foo@
+@fo|Ao@
+se|c|ret| me|ssa|ge
+```
+> Yields this output:
+```
+BAR
+@foo@
+BAR
+@foo@
+|@foo@
+@foAo@
+secret message
 ```
 
 ## Group Options
@@ -300,6 +322,3 @@ Options relating to how [Layers] behave.
 options.key_format = '%^%'
 #<...>
 ```
-
-
-### Key String
