@@ -46,13 +46,13 @@ This behavior can be overriden by specifying `--config=<path>` with the `axbind`
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `map_directory` | String | Path that AxBind checks [Map Files] for, relative to this [Master Config File]'s directory.  |
-| `function_directory` | String | Path that AxBind checks [Function Files] for, relative to this [Master Config File]'s directory. |
+| `map_directory` | String | Path that AxBind reads for [Map Files], relative to this [Master Config File]'s directory.  |
+| `function_directory` | String | Path that AxBind reads for [Function Files], relative to this [Master Config File]'s directory. |
 | `tag_directory` | String | Path of directory that AxBind recursively searches for inside the specified [Root Directory]. Matching paths are deemed 'tag directories', and the directory *containing* them are "tagged" for AxBind modification. |
 | `tag_entry_point` | String | Path to the [Tag Entry Point File] in each 'tag directory'. |
 | `options.meta` | [Meta Options] | Default [Meta Options]. *Currently the only place where [Meta Options] are specified.* |
-| `options.group` | [Group Options] | Default [Group Options]. |
-| `options.layer` | [Layer Options] | Default [Layer Options]. |
+| `options.group` | [Group Options] | Default [Group Options] if they are unspecified in a [Tag Group File]. |
+| `options.layer` | [Layer Options] | Default [Layer Options] if they are unspecified in a [Layer]. |
 
 #### Example:
 ```toml
@@ -76,15 +76,15 @@ key_format = '@^@'
 
 ## Map File
 
-Represents a [Mapping] and its identifier.
+Represents a [Map] and its identifier.
 
 *AxBind will ignore files within the map directory that are not valid toml, or do not contain an `axbind_map` key.*
 
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `axbind_map` | String | . |
-| `map` | [Mapping] | . |
+| `axbind_map` | String | Identifier/name being attached to the [Map] specified. |
+| `map` | [Map] | The [Map] this [Map File] represents. |
 
 #### Example:
 ```toml
@@ -104,8 +104,8 @@ Represents a user-specified mapping of key-value pairs.
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| \<any> | String | . |
-| `@INCLUDE` | String[] [?] | . |
+| \<any> | String | Key-value pairs that make up this [Map]. |
+| `@INCLUDE` | String[] [?] | List of [Map] names; This [Map] will inherit all key-value pairs of the [Maps] specified, in-order ([Maps] specified last will override duplicate keys). Key-value pairs directly specified in this [Map] *(are supposed too [See [Known Issues]])* override included [Maps]. |
 
 #### Example
 ```toml
@@ -322,3 +322,5 @@ Options relating to how [Layers] behave.
 options.key_format = '%^%'
 #<...>
 ```
+
+# Known Issues
