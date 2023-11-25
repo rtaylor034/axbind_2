@@ -76,14 +76,14 @@ key_format = '@^@'
 
 ## Map File
 
-Represents a [Map] and its identifier.
+Represents a [Map] and its name.
 
 *AxBind will ignore files within the map directory that are not valid toml, or do not contain an `axbind_map` key.*
 
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `axbind_map` | String | Identifier/name being attached to the [Map] specified. |
+| `axbind_map` | String | The name attached to the [Map] represented. |
 | `map` | [Map] | The [Map] this [Map File] represents. |
 
 #### Example:
@@ -99,7 +99,7 @@ bar = 'myBarReplacement'
 
 Represents a user-specified mapping of key-value pairs.
 
-*The important part of a [Map File].*
+*The name of a [Map] is specified in its representative [Map File].*
 
 #### Checked Keys:
 | Key | Type | Description |
