@@ -83,8 +83,8 @@ Represents a [Map] and its name.
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `axbind_map` | String | The name attached to the [Map] represented. |
-| `map` | [Map] | The [Map] this [Map File] represents. |
+| `axbind_map` | String | Name of the [Map] represented. |
+| `map` | [Map] | [Map] being represented. |
 
 #### Example:
 ```toml
@@ -117,15 +117,15 @@ bar = 'myBarReplacement'
 
 ## Function File
 
-Represents a [Function] and its identifier.
+Represents a [Function] and its name.
 
 *AxBind will ignore files within the function directory that are not valid toml, or do not contain an `axbind_function` key.*
 
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `axbind_function` | String | . |
-| `function` | [Function] | . |
+| `axbind_function` | String | Nme of the [Function] represented. |
+| `function` | [Function] | [Function] being represented. |
 
 #### Example:
 ```toml
@@ -140,13 +140,17 @@ command = 'echo -n "This used to be ^"'
 
 Represents a user-specified string-to-string function.
 
-*The important part of a [Function File].*
+Can be thought of as a dynamic [Map] that generates its key-value pairs based on a shell script/command.
+
+Can only be used to \*remap\* values.
+
+*The name of a [Function] is specified in its representative [Function File].*
 
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `shell` | String | . |
-| `command` | [KeyString] | . |
+| `shell` | String | Shell executable/command that runs the body command. *The function is executed as `<shell> -c "<command>"`*. |
+| `command` | [KeyString] | Shell command; [Function] body. The [wildcard] is replaced with the unmapped value (input), and the standard out is the output of this [Function]. |
 
 #### Example
 ```toml
@@ -165,7 +169,7 @@ AxBind expects a [Tag Entry Point File] to be present in every [tag directory] a
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `groups`* | String[] [?] | . |
+| `groups`* | String[] [?] | List of paths to [Tag Group Files] relative to the 'tag directory'. [Tag Group Files] are evaluated in the order specified. |
 
 \*If unspecified, AxBind will treat the [Tag Entry Point File] file itself as a [Tag Group File] (and assume it is the only one), and will read it as such.
 
@@ -182,6 +186,8 @@ groups = [
 ## Tag Group File
 
 Tells AxBind which files to apply specified [Layers] to.
+
+*If two or more [Tag Group Files] affect the same file, the file will only hold the result of the last [Tag Group File] evaluated.*
 
 #### Checked Keys:
 | Key | Type | Description |
@@ -244,7 +250,7 @@ wildcard_char = '^'
 
 ### Key String
 
-A String that replaces the any instance of the current `wildcard_char` with another value when evaluated.
+A String that replaces the any instance of the current `wildcard_char` (referred to as just the 'wildcard') with another value when evaluated.
 
 `wildcard_char` instances can be [escaped].
 
