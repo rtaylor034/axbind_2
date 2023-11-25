@@ -46,13 +46,13 @@ This behavior can be overriden by specifying `--config=<path>` with the `axbind`
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `map_directory` | String | . |
-| `function_directory` | String | . |
-| `tag_directory` | String | . |
-| `tag_entry_point` | String | . |
-| `options.meta` | [Meta Options] | . |
-| `options.group` | [Group Options] | . |
-| `options.layer` | [Group Options] | . |
+| `map_directory` | String | Path that AxBind checks [Map Files] for, relative to this [Master Config File]'s directory.  |
+| `function_directory` | String | Path that AxBind checks [Function Files] for, relative to this [Master Config File]'s directory. |
+| `tag_directory` | String | Path of directory that AxBind recursively searches for inside the specified [Root Directory]. Matching paths are deemed 'tag directories', and the directory *containing* them are "tagged" for AxBind modification. |
+| `tag_entry_point` | String | Path to the [Tag Entry Point File] in each 'tag directory'. |
+| `options.meta` | [Meta Options] | Default [Meta Options]. *Currently the only place where [Meta Options] are specified.* |
+| `options.group` | [Group Options] | Default [Group Options]. |
+| `options.layer` | [Layer Options] | Default [Layer Options]. |
 
 #### Example:
 ```toml
