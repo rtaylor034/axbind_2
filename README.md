@@ -245,8 +245,8 @@ Component of [Master Config File].
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `escape_sequence` | String [?] | . |
-| `wildcard_char` | Single Character [?] | . |
+| `escape_sequence` | String [?] | [Escape sequence] that can be used in all interpreted [Key Strings]. *Currently is only useful for escaping the `wildcard_char`.* |
+| `wildcard_char` | String [?] | Must be a single character; character representing the arbitrary input/value in a [Key String], replaced with an actual value at evaluation depending on the context. *(See [Key String])* |
 
 #### Example:
 ```toml
@@ -313,7 +313,7 @@ Component of [Tag Group], [Master Config File].
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `axbind_file_format` | [Key String] [?] | . |
+| `axbind_file_format` | [Key String] [?] | Format of each file's respective 'AxBind file'. the wildcard represents the name of the file being written too. *(See [Tag Group].`files`)* |
 
 #### Example:
 ```toml
@@ -331,8 +331,8 @@ Component of [Layer], [Master Config File].
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `escape_sequence` | String [?] | . |
-| `key_format` | [Key String] [?] | . |
+| `escape_sequence` | String [?] | [Escape sequence] that can be used to escape keys in 'AxBind files' that the [Layer] affects. |
+| `key_format` | [Key String] [?] | Format that keys must be in to be recognized by the [Layer] in an 'AxBind file'. the wildcard represents the raw key of the primary [Map]. |
 
 #### Example:
 ```toml
