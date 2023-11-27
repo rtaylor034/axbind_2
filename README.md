@@ -313,7 +313,7 @@ Component of [Tag Group], [Master Config File].
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `axbind_file_format` | [Key String] [?] | Format of each file's respective 'AxBind file'. the wildcard represents the name of the file being written too. *(See [Tag Group].`files`)* |
+| `axbind_file_format` | [Key String] [?] | Format of each file's respective 'AxBind file'. the wildcard represents a name of a file the [Tag Group] applies too. *(See [Tag Group].`files`)* |
 
 #### Example:
 ```toml
@@ -332,7 +332,7 @@ Component of [Layer], [Master Config File].
 | Key | Type | Description |
 |:----|:-----|:------------|
 | `escape_sequence` | String [?] | [Escape sequence] that can be used to escape keys in 'AxBind files' that the [Layer] affects. |
-| `key_format` | [Key String] [?] | Format that keys must be in to be recognized by the [Layer] in an 'AxBind file'. the wildcard represents the raw key of the primary [Map]. |
+| `key_format` | [Key String] [?] | Format that keys must be in to be recognized and mapped in each 'AxBind file'. the wildcard represents a raw key of the primary [Map]. |
 
 #### Example:
 ```toml
@@ -342,3 +342,13 @@ options.key_format = '%^%'
 ```
 
 # Known Issues
+
+#### '@INCLUDE' keys are overriden based on alphabetical order:
+
+#### Functions are always applied after remaps:
+
+#### Functions are slow to evaluate:
+
+#### Functions evaluate for every value of a map, regardless of use:
+
+#### Layered escape sequence behavior may be unexpected (to the user):
