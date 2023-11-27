@@ -245,7 +245,7 @@ Component of [Master Config File](https://github.com/rtaylor034/axbind_2#master-
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `escape_sequence` | String **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | [Escape sequence](https://github.com/rtaylor034/axbind_2#escape-sequence) that can be used in all interpreted [Key Strings](https://github.com/rtaylor034/axbind_2#key-string). *Currently is only useful for escaping the `wildcard_char`.* |
+| `escape_sequence` | String **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | [Escape sequence](https://github.com/rtaylor034/axbind_2#escape-sequence) that is recognized by AxBind when interpreting [Key Strings](https://github.com/rtaylor034/axbind_2#key-string). *Currently is only useful for escaping the `wildcard_char`.* |
 | `wildcard_char` | String **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | Must be a single character; character representing the arbitrary input/value in a [Key String](https://github.com/rtaylor034/axbind_2#key-string), replaced with an actual value at evaluation depending on the context. *(See [Key String](https://github.com/rtaylor034/axbind_2#key-string))* |
 
 #### Example:
@@ -331,7 +331,7 @@ Component of [Layer](https://github.com/rtaylor034/axbind_2#layer), [Master Conf
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `escape_sequence` | String **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | [escape sequence](https://github.com/rtaylor034/axbind_2#escape-sequence) that can be used to escape keys in 'AxBind files' that the [Layer](https://github.com/rtaylor034/axbind_2#layer) affects. |
+| `escape_sequence` | String **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | [escape sequence](https://github.com/rtaylor034/axbind_2#escape-sequence) that is recognized by AxBind when reading the 'AxBind files' that the [Layer](https://github.com/rtaylor034/axbind_2#layer) affects. |
 | `key_format` | [Key String](https://github.com/rtaylor034/axbind_2#key-string) **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | Format that keys must be in to be recognized and mapped in each 'AxBind file'. the wildcard represents a raw key of the primary [Map](https://github.com/rtaylor034/axbind_2#map). |
 
 #### Example:
