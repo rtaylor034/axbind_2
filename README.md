@@ -28,9 +28,9 @@ Becuase all configuration files are just [toml] tables, they can be described wi
 
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `example_key` | Example [?](https://github.com/rtaylor034/axbind_2#about-the-docs) | Description of what the value for this key represents. |
+| `example_key` | Example **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | Description of what the value for this key represents. |
 
-If the 'Type' is marked with a [?](https://github.com/rtaylor034/axbind_2#about-the-docs) as shown above, specifying the key-value pair is optional.
+If the 'Type' is marked with a **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** as shown above, specifying the key-value pair is optional.
 
 All other key-value pairs are required to be specified, and AxBind will panic or skip the file (depending on the file) if they are not.
 
@@ -90,7 +90,7 @@ Represents a [Map](https://github.com/rtaylor034/axbind_2#map) and its name.
 ```toml
 # ~/.config/axbind/maps/myMap.toml
 axbind_map = 'myMap'
-[Map](https://github.com/rtaylor034/axbind_2#map)
+[map]
 foo = 'myFooReplacement'
 bar = 'myBarReplacement'
 ```
@@ -107,7 +107,7 @@ Component of [Map File](https://github.com/rtaylor034/axbind_2#map-file).
 | Key | Type | Description |
 |:----|:-----|:------------|
 | \<any> | String | Key-value pairs that make up this [Map](https://github.com/rtaylor034/axbind_2#map). |
-| `@INCLUDE` | String[] [?](https://github.com/rtaylor034/axbind_2#about-the-docs) | List of [Map](https://github.com/rtaylor034/axbind_2#map) names; This [Map](https://github.com/rtaylor034/axbind_2#map) will inherit all key-value pairs of the [Maps](https://github.com/rtaylor034/axbind_2#map) specified, in-order ([Maps](https://github.com/rtaylor034/axbind_2#map) specified last will override duplicate keys). Key-value pairs directly specified in this [Map](https://github.com/rtaylor034/axbind_2#map) *(are supposed too [See [Known Issues]])* override included [Maps](https://github.com/rtaylor034/axbind_2#map). |
+| `@INCLUDE` | String[] **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | List of [Map](https://github.com/rtaylor034/axbind_2#map) names; This [Map](https://github.com/rtaylor034/axbind_2#map) will inherit all key-value pairs of the [Maps](https://github.com/rtaylor034/axbind_2#map) specified, in-order ([Maps](https://github.com/rtaylor034/axbind_2#map) specified last will override duplicate keys). Key-value pairs directly specified in this [Map](https://github.com/rtaylor034/axbind_2#map) *(are supposed too [See [Known Issues]])* override included [Maps](https://github.com/rtaylor034/axbind_2#map). |
 
 #### Example
 ```toml
@@ -133,7 +133,7 @@ Represents a [Function](https://github.com/rtaylor034/axbind_2#function) and its
 ```toml
 # ~/.config/axbind/functions/myFunction.toml
 axbind_map = 'myFunction'
-[Function](https://github.com/rtaylor034/axbind_2#function)
+[function]
 shell = 'sh'
 command = 'echo -n "This used to be ^"'
 ```
@@ -173,7 +173,7 @@ AxBind expects a [Tag Entry Point File](https://github.com/rtaylor034/axbind_2#t
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `groups`* | String[] [?](https://github.com/rtaylor034/axbind_2#about-the-docs) | List of paths to [Tag Group Files](https://github.com/rtaylor034/axbind_2#tag-group-file) relative to the 'tag directory'. [Tag Group Files](https://github.com/rtaylor034/axbind_2#tag-group-file) are evaluated in the order specified. |
+| `groups`* | String[] **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | List of paths to [Tag Group Files](https://github.com/rtaylor034/axbind_2#tag-group-file) relative to the 'tag directory'. [Tag Group Files](https://github.com/rtaylor034/axbind_2#tag-group-file) are evaluated in the order specified. |
 
 \*If unspecified, AxBind will treat the [Tag Entry Point File](https://github.com/rtaylor034/axbind_2#tag-entry-point-file) file itself as a [Tag Group File](https://github.com/rtaylor034/axbind_2#tag-group-file) (and assume it is the only one), and will read it as such.
 
@@ -197,7 +197,7 @@ Tells AxBind which files to apply specified [Layers](https://github.com/rtaylor0
 | Key | Type | Description |
 |:----|:-----|:------------|
 | `files` | String[] | List of file paths relative to the \*tagged\* directory that this group affects. Specified file paths will be *written* to after reading each files respective 'AxBind file' (See [Group Options](https://github.com/rtaylor034/axbind_2#group-options)). |
-| `options` | [Group Options](https://github.com/rtaylor034/axbind_2#group-options) [?](https://github.com/rtaylor034/axbind_2#about-the-docs) | This group's options. Overrides the defaults specified in the [Master Config File](https://github.com/rtaylor034/axbind_2#master-config-file). |
+| `options` | [Group Options](https://github.com/rtaylor034/axbind_2#group-options) **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | This group's options. Overrides the defaults specified in the [Master Config File](https://github.com/rtaylor034/axbind_2#master-config-file). |
 | `layers` | [Layer](https://github.com/rtaylor034/axbind_2#layer)[] | [Layers](https://github.com/rtaylor034/axbind_2#layer) to apply—in order—to all axbind files that this group affects. [Layers](https://github.com/rtaylor034/axbind_2#layer) are applied one-after-another and will read the output of the previous. |
 
 #### Example:
@@ -207,7 +207,7 @@ files = [
   'lfrc'
 ]
 options.axbind_file_format = '^.myCustomExtension'
-[[Layers](https://github.com/rtaylor034/axbind_2#layer)]
+[[layers]]
 map = 'myKeybindings'
 remaps = [ 'myLfRemaps' ]
 options.key_format = '%^%'
@@ -225,7 +225,7 @@ Component of [Tag Group File](https://github.com/rtaylor034/axbind_2#tag-group-f
 | `map` | String | [Map](https://github.com/rtaylor034/axbind_2#map) name; all instances of this [Map](https://github.com/rtaylor034/axbind_2#map)'s keys in the specified [key format](https://github.com/rtaylor034/axbind_2#layer-options) will be replaced with its respective value (after specified `remaps` and `functions` are applied to it) when this [Layer](https://github.com/rtaylor034/axbind_2#layer) is applied. |
 | `remaps` | String[] | List of [Map](https://github.com/rtaylor034/axbind_2#map) names; each value of `map` will be re-mapped (values used as keys) by these [Maps](https://github.com/rtaylor034/axbind_2#map), one-after-another in-order. |
 | `functions` | String[] | List of [Function](https://github.com/rtaylor034/axbind_2#function) names; each value of `map` will be modified by these [Functions](https://github.com/rtaylor034/axbind_2#function), one-after-another in-order. *`functions` are applied *after* all remaps (see [Known Issues]).* |
-| `options` | [Layer Options](https://github.com/rtaylor034/axbind_2#layer-options)[] [?](https://github.com/rtaylor034/axbind_2#about-the-docs) | This layer's options. Overrides the defaults specified in the [Master Config File](https://github.com/rtaylor034/axbind_2#master-config-file).  |
+| `options` | [Layer Options](https://github.com/rtaylor034/axbind_2#layer-options)[] **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | This layer's options. Overrides the defaults specified in the [Master Config File](https://github.com/rtaylor034/axbind_2#master-config-file).  |
 
 #### Example:
 ```toml
@@ -245,8 +245,8 @@ Component of [Master Config File](https://github.com/rtaylor034/axbind_2#master-
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `escape_sequence` | String [?](https://github.com/rtaylor034/axbind_2#about-the-docs) | [Escape sequence](https://github.com/rtaylor034/axbind_2#escape-sequence) that can be used in all interpreted [Key Strings](https://github.com/rtaylor034/axbind_2#key-string). *Currently is only useful for escaping the `wildcard_char`.* |
-| `wildcard_char` | String [?](https://github.com/rtaylor034/axbind_2#about-the-docs) | Must be a single character; character representing the arbitrary input/value in a [Key String](https://github.com/rtaylor034/axbind_2#key-string), replaced with an actual value at evaluation depending on the context. *(See [Key String](https://github.com/rtaylor034/axbind_2#key-string))* |
+| `escape_sequence` | String **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | [Escape sequence](https://github.com/rtaylor034/axbind_2#escape-sequence) that can be used in all interpreted [Key Strings](https://github.com/rtaylor034/axbind_2#key-string). *Currently is only useful for escaping the `wildcard_char`.* |
+| `wildcard_char` | String **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | Must be a single character; character representing the arbitrary input/value in a [Key String](https://github.com/rtaylor034/axbind_2#key-string), replaced with an actual value at evaluation depending on the context. *(See [Key String](https://github.com/rtaylor034/axbind_2#key-string))* |
 
 #### Example:
 ```toml
@@ -274,7 +274,7 @@ Escape sequences are removed from the evaluated output unless they themselves ar
 > Given this [Map File](https://github.com/rtaylor034/axbind_2#map-file):
 ```toml
 axbind_map = 'foobar'
-[Map](https://github.com/rtaylor034/axbind_2#map)
+[map]
 foo = 'BAR'
 ```
 > Applying this [Layer](https://github.com/rtaylor034/axbind_2#layer):
@@ -313,7 +313,7 @@ Component of [Tag Group File](https://github.com/rtaylor034/axbind_2#tag-group-f
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `axbind_file_format` | [Key String](https://github.com/rtaylor034/axbind_2#key-string) [?](https://github.com/rtaylor034/axbind_2#about-the-docs) | Format of each file's respective 'AxBind file'. the wildcard represents a name of a file the [Tag Group File](https://github.com/rtaylor034/axbind_2#tag-group-file) applies too. *(See [Tag Group File](https://github.com/rtaylor034/axbind_2#tag-group-file).`files`)* |
+| `axbind_file_format` | [Key String](https://github.com/rtaylor034/axbind_2#key-string) **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | Format of each file's respective 'AxBind file'. the wildcard represents a name of a file the [Tag Group File](https://github.com/rtaylor034/axbind_2#tag-group-file) applies too. *(See [Tag Group File](https://github.com/rtaylor034/axbind_2#tag-group-file).`files`)* |
 
 #### Example:
 ```toml
@@ -331,8 +331,8 @@ Component of [Layer](https://github.com/rtaylor034/axbind_2#layer), [Master Conf
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `escape_sequence` | String [?](https://github.com/rtaylor034/axbind_2#about-the-docs) | [escape sequence](https://github.com/rtaylor034/axbind_2#escape-sequence) that can be used to escape keys in 'AxBind files' that the [Layer](https://github.com/rtaylor034/axbind_2#layer) affects. |
-| `key_format` | [Key String](https://github.com/rtaylor034/axbind_2#key-string) [?](https://github.com/rtaylor034/axbind_2#about-the-docs) | Format that keys must be in to be recognized and mapped in each 'AxBind file'. the wildcard represents a raw key of the primary [Map](https://github.com/rtaylor034/axbind_2#map). |
+| `escape_sequence` | String **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | [escape sequence](https://github.com/rtaylor034/axbind_2#escape-sequence) that can be used to escape keys in 'AxBind files' that the [Layer](https://github.com/rtaylor034/axbind_2#layer) affects. |
+| `key_format` | [Key String](https://github.com/rtaylor034/axbind_2#key-string) **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | Format that keys must be in to be recognized and mapped in each 'AxBind file'. the wildcard represents a raw key of the primary [Map](https://github.com/rtaylor034/axbind_2#map). |
 
 #### Example:
 ```toml
