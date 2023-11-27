@@ -36,7 +36,7 @@ All other key-value pairs are required to be specified, and AxBind will panic or
 
 ## Master Config File
 
-By default, AxBind will check these paths (in order) for a [Master Config File](https://github.com/rtaylor034/axbind_2#master-config-file):
+By default, AxBind will check these paths (in order) for a Master Config File:
 1. `$XDG_CONFIG_HOME/axbind/config.toml`
 2. `$HOME/.config/axbind/config.toml`
 3. `/etc/axbind/config.toml`
@@ -46,8 +46,8 @@ This behavior can be overriden by specifying `--config=<path>` with the `axbind`
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `map_directory` | String | Path that AxBind reads for [Map Files](https://github.com/rtaylor034/axbind_2#map-file), relative to this [Master Config File](https://github.com/rtaylor034/axbind_2#master-config-file)'s directory.  |
-| `function_directory` | String | Path that AxBind reads for [Function Files](https://github.com/rtaylor034/axbind_2#function-file), relative to this [Master Config File](https://github.com/rtaylor034/axbind_2#master-config-file)'s directory. |
+| `map_directory` | String | Path that AxBind reads for [Map Files](https://github.com/rtaylor034/axbind_2#map-file), relative to this Master Config File's directory.  |
+| `function_directory` | String | Path that AxBind reads for [Function Files](https://github.com/rtaylor034/axbind_2#function-file), relative to this Master Config File's directory. |
 | `tag_directory` | String | Path of directory that AxBind recursively searches for inside the specified [Root Directory]. Matching paths are deemed 'tag directories', and the directory *containing* them are "tagged" for AxBind modification. |
 | `tag_entry_point` | String | Path to the [Tag Entry Point File](https://github.com/rtaylor034/axbind_2#tag-entry-point-file) in each 'tag directory'. |
 | `options.meta` | [Meta Options](https://github.com/rtaylor034/axbind_2#meta-options) | Default [Meta Options](https://github.com/rtaylor034/axbind_2#meta-options). *Currently the only place where [Meta Options](https://github.com/rtaylor034/axbind_2#meta-options) are specified.* |
@@ -101,13 +101,13 @@ Represents a user-specified mapping of key-value pairs.
 
 Component of [Map File](https://github.com/rtaylor034/axbind_2#map-file).
 
-*The name of a [Map](https://github.com/rtaylor034/axbind_2#map) is specified in its representative [Map File](https://github.com/rtaylor034/axbind_2#map-file).*
+*The name of a Map is specified in its representative [Map File](https://github.com/rtaylor034/axbind_2#map-file).*
 
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| \<any> | String | Key-value pairs that make up this [Map](https://github.com/rtaylor034/axbind_2#map). |
-| `@INCLUDE` | String[] **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | List of [Map](https://github.com/rtaylor034/axbind_2#map) names; This [Map](https://github.com/rtaylor034/axbind_2#map) will inherit all key-value pairs of the [Maps](https://github.com/rtaylor034/axbind_2#map) specified, in-order ([Maps](https://github.com/rtaylor034/axbind_2#map) specified last will override duplicate keys). Key-value pairs directly specified in this [Map](https://github.com/rtaylor034/axbind_2#map) *(are supposed too [See [Known Issues](https://github.com/rtaylor034/axbind_2#known-issues)])* override included [Maps](https://github.com/rtaylor034/axbind_2#map). |
+| \<any> | String | Key-value pairs that make up this Map. |
+| `@INCLUDE` | String[] **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | List of Map names; This Map will inherit all key-value pairs of the Maps specified, in-order (Maps specified last will override duplicate keys). Key-value pairs directly specified in this Map *(are supposed too [See [Known Issues](https://github.com/rtaylor034/axbind_2#known-issues)])* override included Maps. |
 
 #### Example
 ```toml
@@ -148,13 +148,13 @@ Can only be used to \*remap\* values.
 
 Component of [Function File](https://github.com/rtaylor034/axbind_2#function-file).
 
-*The name of a [Function](https://github.com/rtaylor034/axbind_2#function) is specified in its representative [Function File](https://github.com/rtaylor034/axbind_2#function-file).*
+*The name of a Function is specified in its representative [Function File](https://github.com/rtaylor034/axbind_2#function-file).*
 
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
 | `shell` | String | Shell executable/command that runs the body command. *The function is executed as `<shell> -c "<command>"`*. |
-| `command` | [Key String](https://github.com/rtaylor034/axbind_2#key-string) | Shell command; [Function](https://github.com/rtaylor034/axbind_2#function) body. The wildcard represents an unmapped value (input), and the standard out is the output of this [Function](https://github.com/rtaylor034/axbind_2#function). |
+| `command` | [Key String](https://github.com/rtaylor034/axbind_2#key-string) | Shell command; Function body. The wildcard represents an unmapped value (input), and the standard out is the output of this Function. |
 
 #### Example
 ```toml
@@ -166,16 +166,16 @@ command = 'echo -n "This used to be ^"'
 
 ## Tag Entry Point File
 
-AxBind expects a [Tag Entry Point File](https://github.com/rtaylor034/axbind_2#tag-entry-point-file) to be present in every [tag directory] and reads it first.
+AxBind expects a Tag Entry Point File to be present in every [tag directory] and reads it first.
 
-*Currently, [Tag Entry Point Files](https://github.com/rtaylor034/axbind_2#tag-entry-point-file) only exist to specify [Tag Group Files](https://github.com/rtaylor034/axbind_2#tag-group-file), if any.*
+*Currently, Tag Entry Point Files only exist to specify [Tag Group Files](https://github.com/rtaylor034/axbind_2#tag-group-file), if any.*
 
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
 | `groups`* | String[] **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | List of paths to [Tag Group Files](https://github.com/rtaylor034/axbind_2#tag-group-file) relative to the 'tag directory'. [Tag Group Files](https://github.com/rtaylor034/axbind_2#tag-group-file) are evaluated in the order specified. |
 
-\*If unspecified, AxBind will treat the [Tag Entry Point File](https://github.com/rtaylor034/axbind_2#tag-entry-point-file) file itself as a [Tag Group File](https://github.com/rtaylor034/axbind_2#tag-group-file) (and assume it is the only one), and will read it as such.
+\*If unspecified, AxBind will treat the Tag Entry Point File file itself as a [Tag Group File](https://github.com/rtaylor034/axbind_2#tag-group-file) (and assume it is the only one), and will read it as such.
 
 #### Example:
 
@@ -191,7 +191,7 @@ groups = [
 
 Tells AxBind which files to apply specified [Layers](https://github.com/rtaylor034/axbind_2#layer) to.
 
-*If two or more [Tag Group Files](https://github.com/rtaylor034/axbind_2#tag-group-file) affect the same file, the file will only hold the result of the last [Tag Group File](https://github.com/rtaylor034/axbind_2#tag-group-file) evaluated.*
+*If two or more Tag Group Files affect the same file, the file will only hold the result of the last Tag Group File evaluated.*
 
 #### Checked Keys:
 | Key | Type | Description |
@@ -225,7 +225,7 @@ Component of [Tag Group File](https://github.com/rtaylor034/axbind_2#tag-group-f
 | `map` | String | [Map](https://github.com/rtaylor034/axbind_2#map) name; all instances of this [Map](https://github.com/rtaylor034/axbind_2#map)'s keys in the specified [key format](https://github.com/rtaylor034/axbind_2#layer-options) will be replaced with its respective value (after specified `remaps` and `functions` are applied to it) when this [Layer](https://github.com/rtaylor034/axbind_2#layer) is applied. |
 | `remaps` | String[] | List of [Map](https://github.com/rtaylor034/axbind_2#map) names; each value of `map` will be re-mapped (values used as keys) by these [Maps](https://github.com/rtaylor034/axbind_2#map), one-after-another in-order. |
 | `functions` | String[] | List of [Function](https://github.com/rtaylor034/axbind_2#function) names; each value of `map` will be modified by these [Functions](https://github.com/rtaylor034/axbind_2#function), one-after-another in-order. *`functions` are applied *after* all remaps (see [Known Issues](https://github.com/rtaylor034/axbind_2#known-issues)).* |
-| `options` | [Layer Options](https://github.com/rtaylor034/axbind_2#layer-options)[] **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | This layer's options. Overrides the defaults specified in the [Master Config File](https://github.com/rtaylor034/axbind_2#master-config-file).  |
+| `options` | [Layer Options](https://github.com/rtaylor034/axbind_2#layer-options)[] **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | This Layer's options. Overrides the defaults specified in the [Master Config File](https://github.com/rtaylor034/axbind_2#master-config-file).  |
 
 #### Example:
 ```toml
