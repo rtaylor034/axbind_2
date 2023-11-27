@@ -224,7 +224,7 @@ Component of [Tag Group File].
 |:----|:-----|:------------|
 | `map` | String | [Map] name; all instances of this [Map]'s keys in the specified [key format] will be replaced with its respective value (after specified `remaps` and `functions` are applied to it) when this [Layer] is applied. |
 | `remaps` | String[] | List of [Map] names; each value of `map` will be re-mapped (values used as keys) by these [Maps], one-after-another in-order. |
-| `functions` | String[] | List of [Function] names; each value of `map` will be modified by these [Functions], one-after-another in-order. |
+| `functions` | String[] | List of [Function] names; each value of `map` will be modified by these [Functions], one-after-another in-order. *`functions` are applied *after* all remaps (see [Known Issues]).* |
 | `options` | [Layer Options][] [?] | This layer's options. Overrides the defaults specified in the [Master Config File].  |
 
 #### Example:
