@@ -78,7 +78,7 @@ key_format = '@^@'
 
 Represents a [Map] and its name.
 
-*AxBind will ignore files within the map directory that are not valid toml, or do not contain an `axbind_map` key.*
+*AxBind will ignore (but will warn about) files within the map directory that are not valid toml, or do not contain an `axbind_map` key.*
 
 #### Checked Keys:
 | Key | Type | Description |
@@ -98,6 +98,8 @@ bar = 'myBarReplacement'
 ## Map
 
 Represents a user-specified mapping of key-value pairs.
+
+Component of [Map File].
 
 *The name of a [Map] is specified in its representative [Map File].*
 
@@ -119,7 +121,7 @@ bar = 'myBarReplacement'
 
 Represents a [Function] and its name.
 
-*AxBind will ignore files within the function directory that are not valid toml, or do not contain an `axbind_function` key.*
+*AxBind will ignore (but will warn about) files within the function directory that are not valid toml, or do not contain an `axbind_function` key.*
 
 #### Checked Keys:
 | Key | Type | Description |
@@ -143,6 +145,8 @@ Represents a user-specified string-to-string function.
 Can be thought of as a dynamic [Map] that generates its key-value pairs based on a shell script/command.
 
 Can only be used to \*remap\* values.
+
+Component of [Function File].
 
 *The name of a [Function] is specified in its representative [Function File].*
 
@@ -192,9 +196,9 @@ Tells AxBind which files to apply specified [Layers] to.
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `files` | String[] | . |
-| `options` | [Group Options] [?] | . |
-| `layers` | [Layer][] | . |
+| `files` | String[] | List of file paths relative to the \*tagged\* directory that this group affects. Specified file paths will be *written* to after reading each files respective 'AxBind file' (See [Group Options]). |
+| `options` | [Group Options] [?] | This group's options. Overrides the defaults specified in the [Master Config File]. |
+| `layers` | [Layer][] | [Layers] to apply—in order—to all axbind files that this group affects. [Layers] are applied one-after-another and will read the output of the previous. |
 
 #### Example:
 ```toml
@@ -213,13 +217,15 @@ options.key_format = '%^%'
 
 Represents a specification for AxBind mapping.
 
+Component of [Tag Group File].
+
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
-| `map` | String | . |
-| `remaps` | String[] | . |
-| `functions` | String[] | . |
-| `options` | [Layer Options][] [?] | . |
+| `map` | String | [Map] name; all instances of this [Map]'s keys in the specified [key format] will be replaced with its respective value (after specified `remaps` and `functions` are applied to it) when this [Layer] is applied. |
+| `remaps` | String[] | List of [Map] names; each value of `map` will be re-mapped (values used as keys) by these [Maps], one-after-another in-order. |
+| `functions` | String[] | List of [Function] names; each value of `map` will be modified by these [Functions], one-after-another in-order. |
+| `options` | [Layer Options][] [?] | This layer's options. Overrides the defaults specified in the [Master Config File].  |
 
 #### Example:
 ```toml
@@ -233,6 +239,8 @@ options.key_format = '%^%'
 ## Meta Options
 
 Options relating to how AxBind reads its own configuration files.
+
+Component of [Master Config File].
 
 #### Checked Keys:
 | Key | Type | Description |
@@ -252,7 +260,7 @@ wildcard_char = '^'
 
 A String that replaces the any instance of the current `wildcard_char` (referred to as just the 'wildcard') with another value when evaluated.
 
-`wildcard_char` instances can be [escaped].
+wildcards can be [escaped].
 
 ### Escape Sequence
 
@@ -300,6 +308,8 @@ secret message
 
 Options relating to [Tag Group] specifications.
 
+Component of [Tag Group], [Master Config File].
+
 #### Checked Keys:
 | Key | Type | Description |
 |:----|:-----|:------------|
@@ -315,6 +325,8 @@ axbind_file_format = '^.myCustomExtension'
 ## Layer Options
 
 Options relating to how [Layers] behave.
+
+Component of [Layer], [Master Config File].
 
 #### Checked Keys:
 | Key | Type | Description |
