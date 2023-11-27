@@ -182,7 +182,7 @@ AxBind expects a [Tag Entry Point File] to be present in every [tag directory] a
 ```toml
 # ~/.config/lf/.axbind/main.toml
 groups = [
-  'colors.toml'
+  'colors.toml',
   'keybindings.toml'
 ]
 ```
