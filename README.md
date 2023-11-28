@@ -107,7 +107,7 @@ Component of [Map File](https://github.com/rtaylor034/axbind_2#map-file).
 | Key | Type | Description |
 |:----|:-----|:------------|
 | \<any> | String | Key-value pairs that make up this Map. |
-| `@INCLUDE` | String[] **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | List of Map names; This Map will inherit all key-value pairs of the Maps specified, in-order (Maps specified last will override duplicate keys). Key-value pairs directly specified in this Map *(are supposed too [See [Known Issues](https://github.com/rtaylor034/axbind_2#known-issues)])* override included Maps. |
+| `@INCLUDE` | String[] **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | List of Map names; This Map will inherit all key-value pairs of the Maps specified, in-order (Maps specified last will override duplicate keys). Key-value pairs directly specified in this Map *(are supposed too [See [Issues](https://github.com/rtaylor034/axbind_2/issues)])* override included Maps. |
 
 #### Example
 ```toml
@@ -224,7 +224,7 @@ Component of [Tag Group File](https://github.com/rtaylor034/axbind_2#tag-group-f
 |:----|:-----|:------------|
 | `map` | String | [Map](https://github.com/rtaylor034/axbind_2#map) name; all instances of this [Map](https://github.com/rtaylor034/axbind_2#map)'s keys in the specified [key format](https://github.com/rtaylor034/axbind_2#layer-options) will be replaced with its respective value (after specified `remaps` and `functions` are applied to it) when this [Layer](https://github.com/rtaylor034/axbind_2#layer) is applied. |
 | `remaps` | String[] | List of [Map](https://github.com/rtaylor034/axbind_2#map) names; each value of `map` will be re-mapped (values used as keys) by these [Maps](https://github.com/rtaylor034/axbind_2#map), one-after-another in-order. |
-| `functions` | String[] | List of [Function](https://github.com/rtaylor034/axbind_2#function) names; each value of `map` will be modified by these [Functions](https://github.com/rtaylor034/axbind_2#function), one-after-another in-order. *`functions` are applied *after* all remaps (see [Known Issues](https://github.com/rtaylor034/axbind_2#known-issues)).* |
+| `functions` | String[] | List of [Function](https://github.com/rtaylor034/axbind_2#function) names; each value of `map` will be modified by these [Functions](https://github.com/rtaylor034/axbind_2#function), one-after-another in-order. *`functions` are applied *after* all remaps (see [Issues](https://github.com/rtaylor034/axbind_2/issues)).* |
 | `options` | [Layer Options](https://github.com/rtaylor034/axbind_2#layer-options)[] **[?](https://github.com/rtaylor034/axbind_2#about-the-docs)** | This Layer's options. Overrides the defaults specified in the [Master Config File](https://github.com/rtaylor034/axbind_2#master-config-file).  |
 
 #### Example:
