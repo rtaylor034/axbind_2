@@ -41,7 +41,7 @@ By default, AxBind will check these paths (in order) for a Master Config File:
 2. `$HOME/.config/axbind/config.toml`
 3. `/etc/axbind/config.toml`
 
-This behavior can be overriden by specifying `--config=<path>` with the `axbind` command.
+This behavior can be overriden by specifying the [config path](https://github.com/rtaylor034/axbind_2#configpath) option.
 
 #### Checked Keys:
 | Key | Type | Description |
