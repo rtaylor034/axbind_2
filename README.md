@@ -48,7 +48,7 @@ This behavior can be overriden by specifying `--config=<path>` with the `axbind`
 |:----|:-----|:------------|
 | `map_directory` | String | Path that AxBind reads for [Map Files](https://github.com/rtaylor034/axbind_2#map-file), relative to this Master Config File's directory.  |
 | `function_directory` | String | Path that AxBind reads for [Function Files](https://github.com/rtaylor034/axbind_2#function-file), relative to this Master Config File's directory. |
-| `tag_directory` | String | Path of directory that AxBind recursively searches for inside the specified [Root Directory]. Matching paths are deemed 'tag directories', and the directory *containing* them are "tagged" for AxBind modification. |
+| `tag_directory` | String | Path of directory that AxBind recursively searches for inside the specified [root directory](https://github.com/rtaylor034/axbind_2#root-directory). Matching paths are deemed 'tag directories', and the directory *containing* them are "tagged" for AxBind modification. |
 | `tag_entry_point` | String | Path to the [Tag Entry Point File](https://github.com/rtaylor034/axbind_2#tag-entry-point-file) in each 'tag directory'. |
 | `options.meta` | [Meta Options](https://github.com/rtaylor034/axbind_2#meta-options) | Default [Meta Options](https://github.com/rtaylor034/axbind_2#meta-options). *Currently the only place where [Meta Options](https://github.com/rtaylor034/axbind_2#meta-options) are specified.* |
 | `options.group` | [Group Options](https://github.com/rtaylor034/axbind_2#group-options) | Default [Group Options](https://github.com/rtaylor034/axbind_2#group-options) if they are unspecified in a [Tag Group File](https://github.com/rtaylor034/axbind_2#tag-group-file). |
