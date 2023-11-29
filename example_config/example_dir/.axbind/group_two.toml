@@ -1,0 +1,20 @@
+files = [
+    'file_two.txt'
+]
+# changes the default '.axbind' extension convention to '.specialbind' for this group of files
+options.axbind_file_format = '^.twobind'
+
+[[layers]]
+map = 'includeall'
+# remaps affect the mapped-to value, and are applied one-after-another in-order
+# this leads to all instances of 'foo', 'bar', and 'baz' being mapped to 'qux' (along with their uppercase counterparts)
+remaps = [
+    'bar2baz',
+    'baz2qux'
+]
+functions = [ 'parenthesis' ]
+
+[[layers]]
+map = 'includeall'
+functions = [ 'addcaret' ]
+options.key_format = '~^~'
