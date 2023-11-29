@@ -1,4 +1,4 @@
-### Example AxBind config folder
+## Example AxBind config folder
 
 Put the contents of this folder inside `~/.config/axbind` or your preferred config directory.
 
