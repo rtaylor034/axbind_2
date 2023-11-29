@@ -6,10 +6,10 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-toml-context = { path = "/home/gfunction/Projects/Rust/Lib/toml-context/v0.1" }
-gfunc = { path = "/home/gfunction/Projects/Rust/Lib/gfunc/v0.1", features = [ 'fnav', 'run' ] }
+toml-context = { path = "bundled_dependencies/toml-context/v0.1" }
+gfunc = { path = "bundled_dependencies/gfunc/v0.1", features = [ 'fnav', 'run' ] }
 aho-corasick = "1.1.2"
-optwrite = { path = "/home/gfunction/Projects/Rust/Lib/optwrite/v0.1/" }
+optwrite = { path = "bundled_dependencies/optwrite/v0.1" }
 anyhow = "1.0.75"
 toml = "0.8.8"
 
