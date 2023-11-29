@@ -6,5 +6,5 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-gfunc = { path = "/home/gfunction/Projects/Rust/Lib/gfunc/v0.1", features = [ "gtypes" ] }
+gfunc = { path = "../../gfunc/v0.1", features = [ "gtypes" ] }
 toml = "0.8.5"
