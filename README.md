@@ -341,14 +341,19 @@ options.key_format = '%^%'
 #<...>
 ```
 
-# Known Issues
+# Command Usage
 
-#### '@INCLUDE' keys are overriden based on alphabetical order:
+```axbind <root directory> [<options>]```
 
-#### Functions are always applied after remaps:
+#### `<root directory>`
 
-#### Functions are slow to evaluate:
+Directory to be recursively searched for tagged directories to apply AxBind mappings too. \
+(i.e. The "scope" of this AxBind execution.)
 
-#### Functions evaluate for every value of a map, regardless of use:
+In most cases, specifying `~/.config` as the root directory is standard, however being more specific (ex: `~/.config/lf`) may be beneficial if one does not want to re-evaluate other AxBind files.
 
-#### Layered escape sequence behavior may be unexpected (to the user):
+### Options
+
+#### `--config=<path>`
+
+Sets the config file of this AxBind execution to `<path>`.
