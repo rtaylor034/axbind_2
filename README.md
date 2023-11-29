@@ -18,7 +18,7 @@ AxBind is written in Rust and all configuration files of AxBind use [toml](https
 
 # Documentation
 
-**For quickly getting started, an [example configuraton] is provided with reasonable defaults and guiding comments.**
+**For quickly getting started, an [example configuraton](https://github.com/rtaylor034/axbind_2/tree/main/example_config) is provided with reasonable defaults and guiding comments.**
 
 ### About The Docs
 
