@@ -1,5 +1,5 @@
 # if 'groups' is not specified, this file is treated as a group.
 groups = [
     'group_one.toml',
-    'special.toml',
+    'group_two.toml',
 ]
