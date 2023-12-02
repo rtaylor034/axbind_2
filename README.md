@@ -19,6 +19,23 @@ Beyond basic key-value replacement, mapping behavior can be further controlled p
 
 AxBind is written in Rust and all configuration files of AxBind use [toml](https://toml.io/en/) syntax.
 
+# Command Usage
+
+```axbind <root directory> [<options>]```
+
+#### `<root directory>`
+
+Directory to be recursively searched for tagged directories to apply AxBind mappings too. \
+(i.e. The "scope" of this AxBind execution.)
+
+In most cases, specifying `~/.config` as the root directory is standard, however being more specific (ex: `~/.config/lf`) may be beneficial if one does not want to re-evaluate other AxBind files.
+
+### Options
+
+#### `--config=<path>`
+
+Sets the config file of this AxBind execution to `<path>`.
+
 # Documentation
 
 **For quickly getting started, an [example configuraton](https://github.com/rtaylor034/axbind_2/tree/main/example_config) is provided with reasonable defaults and guiding comments.**
@@ -343,20 +360,3 @@ Component of [Layer](https://github.com/rtaylor034/axbind_2#layer), [Master Conf
 options.key_format = '%^%'
 #<...>
 ```
-
-# Command Usage
-
-```axbind <root directory> [<options>]```
-
-#### `<root directory>`
-
-Directory to be recursively searched for tagged directories to apply AxBind mappings too. \
-(i.e. The "scope" of this AxBind execution.)
-
-In most cases, specifying `~/.config` as the root directory is standard, however being more specific (ex: `~/.config/lf`) may be beneficial if one does not want to re-evaluate other AxBind files.
-
-### Options
-
-#### `--config=<path>`
-
-Sets the config file of this AxBind execution to `<path>`.
