@@ -152,7 +152,7 @@ Represents a [Function](https://github.com/rtaylor034/axbind_2#function) and its
 #### Example:
 ```toml
 # ~/.config/axbind/functions/myFunction.toml
-axbind_map = 'myFunction'
+axbind_function = 'myFunction'
 [function]
 shell = 'sh'
 command = 'echo -n "This used to be ^"'
