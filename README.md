@@ -5,10 +5,6 @@
 [![Gfunction Status](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Frtaylor034%2Fproject-tags%2Fmain%2Ftags%2Fstatus%2Fusable.json)](https://github.com/rtaylor034/project-tags)
 [![Gfunction Stance](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Frtaylor034%2Fproject-tags%2Fmain%2Ftags%2Fstance%2Finactive.json)](https://github.com/rtaylor034/project-tags)
 
-#### Note:
-
-*Eventually will have binary/package posted, but as of right now `axbind` must be built from source.*
-
 ## Description
 
 AxBind is program intended to automate the task of editing multiple dotfiles when making a single abstract change to keybindings/colors/etc.
