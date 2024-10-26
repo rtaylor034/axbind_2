@@ -325,3 +325,5 @@ Component of [Layer](https://github.com/rtaylor034/axbind_2#layer), [Master Conf
 options.key_format = '%^%'
 #<...>
 ```
+# Full Examples
+See the [example config](example_config/) directory.
