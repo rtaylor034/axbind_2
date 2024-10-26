@@ -3,13 +3,12 @@
 > One key-map to rule them all.
 ## Overview
 
-It is important to note that AxBind is the product of an indecisive and naive linux user who just wanted all of their programs to have the same key-bindings, but couldn't help but change them **every damn day**.
+AxBind is the product of an indecisive and naive linux user who just wanted all of their programs to have the same key-bindings, but couldn't help but change them **every damn day**.
 
-### Description
-AxBind is at it's core, a search-and-replace text program; however, it provides a declarative configuration system that creates concrete definitions of string-to-string mappings, aswell as string-to-string functions.
+At it's core, AxBind is just a search-and-replace text program; however, it provides a declarative configuration system that creates concrete definitions of string-to-string mappings, aswell as string-to-string functions.
 
 These mappings and functions can then be linked to desired files, allowing many files to follow the same key-to-value replacement schema. \
-Fine-tuned modifications for such schema can be made per-file for any desired/required foramatting differences.
+Fine-tuned modifications can be made per-file for any desired/required foramatting differences.
 
 AxBind is written in Rust and all configuration files of AxBind use [toml](https://toml.io/en/) syntax.
 
