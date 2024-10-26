@@ -19,9 +19,8 @@ Directory to recursively search for tagged directories and apply AxBind mappings
 ### Options
 
 `--config=<path>`: \
-Sets the [Master Config File](https://github.com/rtaylor034/axbind_2#master-config-file) path of this AxBind execution to `<path>`. 
-
-*If unset, will check these paths in-order:*
+Sets the [Master Config File](https://github.com/rtaylor034/axbind_2#master-config-file) path. \
+If unset, checks the following paths in-order:
 1. `$XDG_CONFIG_HOME/axbind/config.toml`
 2. `$HOME/.config/axbind/config.toml`
 3. `/etc/axbind/config.toml`
