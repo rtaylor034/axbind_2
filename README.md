@@ -27,12 +27,9 @@ If unset, checks the following paths in-order:
 
 
 # Documentation
+**For quickly getting started, consider looking at the [example configuration](https://github.com/rtaylor034/axbind_2/tree/main/example_config).**
 
-**For quickly getting started, an [example configuraton](https://github.com/rtaylor034/axbind_2/tree/main/example_config) is provided with reasonable defaults and guiding comments.**
-
-### About The Docs
-
-
+## Preface
 All configuration files are [toml](https://toml.io/en/) tables, and are documented as shown:
 
 | Key | Type | Description |
@@ -41,7 +38,8 @@ All configuration files are [toml](https://toml.io/en/) tables, and are document
 
 All keys are required unless it's 'Type' is marked with a **?** as shown above.
 
-The documentation defines toml sub-objects in the same format.
+The documentation defines toml sub-objects/components in the same format.
+
 
 ## Master Config File
 
