@@ -1,18 +1,15 @@
 
 # AxBind
+> One key-map to rule them all.
+## Overview
 
-> Dotfile management for the indecisive.
-> 
-[![Gfunction Status](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Frtaylor034%2Fproject-tags%2Fmain%2Ftags%2Fstatus%2Fusable.json)](https://github.com/rtaylor034/project-tags)
-[![Gfunction Stance](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Frtaylor034%2Fproject-tags%2Fmain%2Ftags%2Fstance%2Finactive.json)](https://github.com/rtaylor034/project-tags)
+It is important to note that AxBind is the product of an indecisive and naive linux user who just wanted all of their programs to have the same key-bindings, but couldn't help but change them **every damn day**.
 
-## Description
+### Description
+AxBind is at it's core, a search-and-replace text program; however, it provides a declarative configuration system that creates concrete definitions of string-to-string mappings, aswell as string-to-string functions.
 
-AxBind is program intended to automate the task of editing multiple dotfiles when making a single abstract change to keybindings/colors/etc.
-
-This is achieved through user-defined mappings that are applied to all/specified text files of a directory (ex: ~/.config).
-
-Beyond basic key-value replacement, mapping behavior can be further controlled per-file (i.e. remapping, text functions, layering multiple maps, etc.).
+These mappings and functions can then be linked to desired files, allowing many files to follow the same key-to-value replacement schema. \
+Fine-tuned modifications for such schema can be made per-file for any desired/required foramatting differences.
 
 AxBind is written in Rust and all configuration files of AxBind use [toml](https://toml.io/en/) syntax.
 
@@ -41,7 +38,7 @@ Sets the [Master Config File](https://github.com/rtaylor034/axbind_2#master-conf
 ### About The Docs
 
 
-All configuration files are [toml](https://toml.io/en/) tables, and will described as shown:
+All configuration files are [toml](https://toml.io/en/) tables, and are documented as shown:
 
 | Key | Type | Description |
 |:----|:-----|:------------|
