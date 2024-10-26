@@ -1,6 +1,6 @@
 
 # AxBind
-> One key-map to rule them all.
+> Make one key-map to rule them all.
 ## Overview
 
 AxBind is the product of an indecisive and naive linux user who just wanted all of their programs to have the same key-bindings, but couldn't help but change them **every damn day**.
